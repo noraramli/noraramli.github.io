@@ -1,0 +1,2209 @@
+/* ==========================================================================
+   Nora Ramli — site styles
+   All colours are defined once here as tokens (CLAUDE.md §5.1).
+   Page styles must use the tokens, never raw colour values.
+   ========================================================================== */
+
+/* ---------- Fonts (stored in the site; no third-party requests) ---------- */
+
+@font-face {
+  font-family: "Bodoni Moda";
+  src: url("fonts/bodoni-moda-latin-opsz-normal.woff2") format("woff2");
+  font-weight: 400 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Bodoni Moda";
+  src: url("fonts/bodoni-moda-latin-opsz-italic.woff2") format("woff2");
+  font-weight: 400 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("fonts/inter-latin-400-normal.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("fonts/inter-latin-500-normal.woff2") format("woff2");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ---------- Tokens ---------- */
+
+:root {
+  /* Colours (§5.1) */
+  --page: #F7F7F4;
+  --surface: #FFFFFF;
+  --ink: #1C2622;
+  --ink-soft: #4A534F;
+  --line: #DCE3DF;
+  --accent: #3E6E5E;
+  --mint-wash: #EFF5F1;
+  --mint-mark: #BFDACB;
+  --forest: #1E4A40;
+  --forest-ink: #FFFFFF;
+  --forest-soft: #A8C9BC;
+  --forest-mark: #3F7A68;
+  --terracotta: #C1693F;
+  --terracotta-ink: #9C4E2A;
+
+  /* Type (§5.2) */
+  --serif: "Bodoni Moda", "Didot", "Bodoni 72", Georgia, serif;
+  --sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --text-body: 16px;
+  --text-masthead: 46px;
+  --text-hero: 34px;
+  --text-section: 24px;
+  --text-small: 14px;
+  --text-eyebrow: 12px;
+
+  /* Layout (§5.6) */
+  --content-max: 1100px;
+  --text-max: 65ch;
+  --gutter: 16px;
+  --shell-radius: 24px;
+  --section-gap: 72px;   /* space at the top of a page */
+  --section-space: 56px; /* space between one section and the next */
+}
+
+@media (min-width: 768px) {
+  :root {
+    --text-masthead: 76px;
+    --text-hero: 52px;
+    --text-section: 30px;
+    --gutter: 40px;
+    --section-gap: 112px;
+    --section-space: 80px;
+  }
+}
+
+/* ---------- Base ---------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--page);
+  color: var(--ink-soft);
+  font-family: var(--sans);
+  font-size: var(--text-body);
+  font-weight: 400;
+  line-height: 1.6;
+  overflow-wrap: break-word;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  margin: 0;
+  color: var(--ink);
+  font-family: var(--serif);
+  font-weight: 400;
+  font-optical-sizing: auto;
+  line-height: 1.15;
+  text-wrap: balance; /* even line lengths, no stranded words */
+}
+
+h1 {
+  font-size: var(--text-hero);
+}
+
+h2 {
+  font-size: var(--text-section);
+}
+
+p {
+  margin: 0;
+  max-width: var(--text-max);
+}
+
+a {
+  color: var(--accent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: var(--ink);
+}
+
+/* Visible keyboard focus on everything that can be focused */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Hidden visually, still read by screen readers */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  z-index: 10;
+  padding: 8px 14px;
+  background: var(--forest);
+  color: var(--forest-ink);
+  border-radius: 8px;
+  transform: translateY(-200%);
+}
+
+.skip-link:focus {
+  transform: none;
+}
+
+/* ---------- Page shell (§5.4) ---------- */
+
+.shell {
+  max-width: calc(var(--content-max) + 2 * var(--gutter));
+  min-height: calc(100vh - 16px);
+  margin: 8px;
+  background: var(--surface);
+  border-radius: var(--shell-radius);
+  overflow: hidden; /* keeps full-width bands inside the rounded corners */
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 768px) {
+  .shell {
+    min-height: calc(100vh - 48px);
+    margin: 24px auto;
+    width: calc(100% - 48px);
+  }
+}
+
+.shell > main {
+  flex: 1;
+}
+
+/* Keeps content to the agreed width with side gutters */
+.wrap {
+  padding-left: var(--gutter);
+  padding-right: var(--gutter);
+}
+
+/* ---------- Header (§5.4) ---------- */
+
+.site-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px 24px;
+  padding-top: 22px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--line);
+}
+
+.wordmark {
+  color: var(--ink);
+  font-family: var(--serif);
+  font-optical-sizing: auto;
+  font-size: 22px;
+  line-height: 1.2;
+  text-decoration: none;
+}
+
+.wordmark:hover {
+  color: var(--accent);
+}
+
+/* Home only: the masthead carries the name, so the header wordmark is hidden */
+.page-home .wordmark {
+  display: none;
+}
+
+.site-nav {
+  margin-left: auto;
+}
+
+.site-nav ul {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--text-small);
+}
+
+/* Middot separators between links */
+.site-nav li + li::before {
+  content: "·";
+  padding: 0 0.5em;
+  color: var(--ink-soft);
+}
+
+.site-nav a {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.site-nav a:hover {
+  color: var(--accent);
+}
+
+/* Active page: a small terracotta underline (§5.1) */
+.site-nav a[aria-current="page"] {
+  text-decoration: underline;
+  text-decoration-color: var(--terracotta);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 6px;
+}
+
+/* Phone menu: below 768px a "Menu" button opens the links as a list of
+   easy-to-tap rows. assets/site.js adds .has-menu; without it (no
+   JavaScript) the links stay visible as above. */
+.menu-toggle {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .site-header.has-menu {
+    align-items: center;
+  }
+
+  .has-menu .menu-toggle {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    margin: -10px -4px -10px auto; /* a full tap area without making the header taller */
+    padding: 0 4px;
+    background: none;
+    border: 0;
+    color: var(--ink);
+    cursor: pointer;
+    font: inherit;
+    font-size: var(--text-small);
+    font-weight: 500;
+  }
+
+  .has-menu .menu-toggle:hover {
+    color: var(--accent);
+  }
+
+  .has-menu .site-nav {
+    display: none;
+    flex-basis: 100%;
+    margin-left: 0;
+  }
+
+  .has-menu.is-open .site-nav {
+    display: block;
+  }
+
+  .has-menu .site-nav ul {
+    display: block;
+    margin-top: 6px;
+    font-size: var(--text-body);
+  }
+
+  .has-menu .site-nav li {
+    border-top: 1px solid var(--line);
+  }
+
+  .has-menu .site-nav li + li::before {
+    content: none;
+  }
+
+  .has-menu .site-nav a {
+    display: block;
+    padding: 12px 0;
+  }
+
+  /* The current page keeps its terracotta underline, set a little closer */
+  .has-menu .site-nav a[aria-current="page"] {
+    text-underline-offset: 5px;
+  }
+}
+
+/* ---------- Eyebrow (§5.4) ---------- */
+
+.eyebrow {
+  margin: 0 0 14px;
+  color: var(--accent);
+  font-family: var(--sans);
+  font-size: var(--text-eyebrow);
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+
+.nowrap {
+  white-space: nowrap;
+}
+
+/* On narrow screens, turns a middot into a clean line break
+   so no dot is left hanging at the end of a line */
+@media (max-width: 479px) {
+  .sep-break {
+    display: block;
+    height: 0;
+    overflow: hidden;
+  }
+}
+
+/* ---------- Signature headline highlighter (§5.3) ---------- */
+/* A thick soft band sitting low behind the italic phrase. */
+
+.mark {
+  font-style: italic;
+  padding: 0 0.04em;
+  background-image: linear-gradient(
+    to bottom,
+    transparent 72%,
+    var(--mint-mark) 72%,
+    var(--mint-mark) 91%,
+    transparent 91%
+  );
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+/* ---------- Sections ---------- */
+
+.section {
+  padding-top: var(--section-gap);
+  padding-bottom: var(--section-space);
+}
+
+/* Consecutive sections share one gap rather than doubling it */
+.section + .section {
+  padding-top: 0;
+}
+
+.hero {
+  text-align: center;
+}
+
+.hero p {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hero h1 {
+  margin-bottom: 24px;
+}
+
+/* Same breathing room above the masthead as below it */
+.hero .eyebrow {
+  margin-bottom: 28px;
+}
+
+/* Home masthead: the name set large, like a newspaper front page */
+.hero .masthead {
+  margin-bottom: 28px;
+  font-size: var(--text-masthead);
+  line-height: 1;
+  letter-spacing: 0.01em;
+}
+
+/* Home intro: a short motto under the masthead, in Bodoni italic */
+.hero .hero-intro {
+  max-width: 34em;
+  color: var(--ink-soft);
+  font-family: var(--serif);
+  font-optical-sizing: auto;
+  font-style: italic;
+  font-size: 20px;
+  line-height: 1.45;
+  text-wrap: balance; /* evens out line lengths so no word is left alone */
+}
+
+@media (min-width: 768px) {
+  .hero .hero-intro {
+    font-size: 22px;
+  }
+}
+
+/* Page intro under a hero headline (e.g. About): a narrower, centred column */
+.hero .hero-lede {
+  max-width: 36em;
+}
+
+.hero .hero-links {
+  justify-content: center;
+  margin-top: 28px;
+}
+
+/* ---------- One field, one year: the Monet series ---------- */
+
+.series {
+  margin: 0;
+}
+
+/* Small label above the painting, so visitors know how to read it */
+.series-eyebrow {
+  max-width: none;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+/* Bridge from the paintings to How I work: a short centred paragraph */
+.series-bridge {
+  max-width: 48em; /* wide enough for two lines on desktop */
+  margin: 32px auto 0;
+  text-align: center;
+  text-wrap: balance;
+}
+
+/* The stage keeps the shape of the widest painting, so the page never
+   jumps when the painting changes. Narrower paintings sit centred on white,
+   always whole: never cropped. */
+.viewer-stage {
+  max-width: 900px;
+  margin: 0 auto;
+  aspect-ratio: 1.693;
+}
+
+.viewer-link {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.viewer-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: opacity 0.2s ease;
+}
+
+.viewer-image.is-changing {
+  opacity: 0;
+}
+
+/* Title of the painting on show */
+.viewer-now {
+  margin: 12px auto 0;
+  color: var(--ink-soft);
+  font-size: 13px;
+  line-height: 1.5;
+  text-align: center;
+}
+
+/* Thumbnails: the four seasons, one chosen at a time */
+.viewer-thumbs {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.viewer-thumbs button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  min-width: 44px; /* comfortable tap area on phones */
+  padding: 0 0 5px;
+  background: none;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  border-radius: 0;
+  color: var(--ink-soft);
+  font: inherit;
+  font-size: 11px;
+  line-height: 1.3;
+  cursor: pointer;
+}
+
+/* The chosen season: a small terracotta mark (one of the agreed uses, §5.1) */
+.viewer-thumbs button[aria-pressed="true"] {
+  border-bottom-color: var(--terracotta);
+  color: var(--ink);
+}
+
+/* Only the little pictures fade, so the labels stay easy to read */
+.viewer-thumbs img {
+  display: block;
+  width: auto;
+  height: 32px;
+  opacity: 0.5;
+  transition: opacity 0.2s ease;
+}
+
+.viewer-thumbs button:hover img {
+  opacity: 0.85;
+}
+
+.viewer-thumbs button[aria-pressed="true"] img {
+  opacity: 1;
+}
+
+@media (min-width: 768px) {
+  .viewer-thumbs {
+    gap: 14px;
+  }
+
+  .viewer-thumbs img {
+    height: 40px;
+  }
+}
+
+.series figcaption {
+  margin-top: 28px;
+  text-align: center;
+}
+
+.series figcaption p {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.series-caption {
+  color: var(--ink);
+  font-family: var(--serif);
+  font-optical-sizing: auto;
+  font-style: italic;
+  font-size: 20px;
+  line-height: 1.45;
+  text-wrap: balance;
+}
+
+@media (min-width: 768px) {
+  .series-caption {
+    font-size: 22px;
+  }
+}
+
+.series figcaption .series-credit {
+  max-width: none;
+  text-wrap: balance;
+  margin-top: 6px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* ---------- Mint panel (§5.4) ---------- */
+
+.panel-mint {
+  padding: 28px 20px;
+  background: var(--mint-wash);
+  border-radius: 16px;
+}
+
+@media (min-width: 768px) {
+  .panel-mint {
+    padding: 44px 48px 48px;
+  }
+}
+
+.panel-mint > .eyebrow {
+  margin-bottom: 24px;
+}
+
+/* ---------- How I work: three principles ---------- */
+
+.principles {
+  display: grid;
+  gap: 28px;
+}
+
+@media (min-width: 900px) {
+  .principles {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+  }
+}
+
+/* Small arrow link, e.g. "More on how I think →" */
+.text-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 32px;
+  color: var(--accent);
+  font-size: 15px;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.text-link:hover {
+  color: var(--ink);
+  text-decoration: underline;
+}
+
+.text-link span {
+  transition: transform 0.2s ease;
+}
+
+.text-link:hover span {
+  transform: translateX(3px);
+}
+
+.principle h3 {
+  margin-bottom: 10px;
+  font-size: 24px;
+  line-height: 1.2;
+}
+
+/* ---------- Forest band (§5.4) ---------- */
+/* Full width of the page card, white text. Once or twice per page at most. */
+
+.band-forest {
+  padding-top: 64px;
+  padding-bottom: 64px;
+  background: var(--forest);
+  color: var(--forest-ink);
+}
+
+@media (min-width: 768px) {
+  .band-forest {
+    padding-top: 88px;
+    padding-bottom: 88px;
+  }
+}
+
+/* A band directly after a section keeps the normal gap above it */
+.band-forest + .section {
+  padding-top: var(--section-space);
+}
+
+.band-forest h2,
+.band-forest h3 {
+  color: var(--forest-ink);
+}
+
+.band-forest .eyebrow {
+  color: var(--forest-soft);
+}
+
+/* On forest, the highlighter uses the darker green mark (§5.3) */
+.band-forest .mark {
+  background-image: linear-gradient(
+    to bottom,
+    transparent 72%,
+    var(--forest-mark) 72%,
+    var(--forest-mark) 91%,
+    transparent 91%
+  );
+}
+
+/* ---------- Outlined card on forest (§5.4) ---------- */
+
+.card-outline {
+  padding: 24px 20px;
+  border: 1px solid color-mix(in srgb, var(--forest-soft) 45%, transparent);
+  border-radius: 16px;
+}
+
+@media (min-width: 768px) {
+  .card-outline {
+    padding: 32px;
+  }
+}
+
+.card-outline p {
+  margin: 0 0 24px;
+}
+
+/* A small label naming what the card is about, e.g. "Plate I · Sustainability governance" */
+.card-outline .eyebrow {
+  margin-bottom: 10px;
+}
+
+/* ---------- Tags (§5.5) ---------- */
+/* Italic, dashed outline, small radius. Not used on Home; kept for later pages. */
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tag {
+  display: inline-block;
+  padding: 3px 10px;
+  border: 1px dashed currentColor;
+  border-radius: 6px;
+  font-size: 13px;
+  font-style: italic;
+  line-height: 1.5;
+}
+
+.band-forest .tag {
+  color: var(--forest-soft);
+}
+
+/* ---------- Buttons (§5.4) ---------- */
+/* On light backgrounds: forest with white text. On forest: white with ink text. */
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 18px;
+  background: var(--forest);
+  color: var(--forest-ink);
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.2;
+  text-decoration: none;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.button span {
+  transition: transform 0.2s ease;
+}
+
+.button:hover {
+  color: var(--forest-ink);
+  background: var(--accent);
+}
+
+.button:hover span {
+  transform: translateX(3px);
+}
+
+.button-light {
+  background: var(--surface);
+  color: var(--ink);
+}
+
+.button-light:hover {
+  background: var(--mint-wash);
+  color: var(--ink);
+}
+
+/* Keyboard focus stays visible on the dark band */
+.band-forest :focus-visible {
+  outline-color: var(--forest-ink);
+}
+
+/* ---------- Featured case file (Home) ---------- */
+
+.featured {
+  display: grid;
+  gap: 32px;
+  align-items: center;
+}
+
+@media (min-width: 900px) {
+  .featured {
+    grid-template-columns: 1fr 1fr;
+    gap: 56px;
+  }
+}
+
+.featured-head h2 {
+  max-width: 18em;
+}
+
+/* ---------- Editorial index (Home: More work) ---------- */
+/* A contents-page list: one line per piece, fine rules between. */
+
+.index-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--line);
+}
+
+.index-list li {
+  border-bottom: 1px solid var(--line);
+}
+
+.index-list a {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 6px 16px;
+  padding: 20px 0;
+  color: inherit;
+  text-decoration: none;
+}
+
+.index-meta {
+  grid-column: 1 / -1;
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+
+.index-body {
+  display: block;
+}
+
+.index-title {
+  display: block;
+  color: var(--ink);
+  font-family: var(--serif);
+  font-optical-sizing: auto;
+  font-size: 20px;
+  line-height: 1.25;
+  transition: color 0.2s ease;
+}
+
+.index-teaser {
+  display: block;
+  margin-top: 4px;
+  font-size: 15px;
+}
+
+/* Small terracotta arrows (an agreed use, §5.1) */
+.index-arrow {
+  align-self: center;
+  color: var(--terracotta);
+  transition: transform 0.2s ease;
+}
+
+.index-list a:hover .index-title {
+  color: var(--accent);
+}
+
+.index-list a:hover .index-arrow {
+  transform: translateX(3px);
+}
+
+/* Wider screens: label column on the left, title and teaser in the middle */
+@media (min-width: 768px) {
+  .index-list a {
+    grid-template-columns: 220px 1fr auto;
+    gap: 24px;
+    align-items: baseline;
+    padding: 24px 0;
+  }
+
+  .index-meta {
+    grid-column: auto;
+  }
+
+  .index-title {
+    font-size: 22px;
+  }
+}
+
+/* ---------- Teaser strip (Home: Writing) ---------- */
+/* Text on the left, button on the right; stacked on phones. */
+
+.teaser {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 20px;
+}
+
+@media (min-width: 768px) {
+  .teaser {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+  }
+}
+
+.teaser-title {
+  font-size: 22px;
+  line-height: 1.25;
+}
+
+.teaser-title a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.teaser-title a:hover {
+  color: var(--accent);
+}
+
+.teaser-meta {
+  margin-top: 6px;
+  font-size: 15px;
+}
+
+.teaser .button {
+  flex-shrink: 0;
+}
+
+/* ---------- The route (About): a five-stop timeline ---------- */
+/* Phones and tablets: runs down the page. Desktop: runs across.
+   Past stops are mint dots on a fine line; the last stop is "now",
+   in terracotta (an agreed use, §5.1). */
+
+/* Down the page, the list sits in a centred column under the centred hero */
+.route {
+  max-width: 26rem;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+}
+
+.route li {
+  position: relative;
+  padding: 0 0 28px 32px;
+}
+
+.route li:last-child {
+  padding-bottom: 0;
+}
+
+/* The dot: drawn above the line, so the line passes behind it */
+.route li::before {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  top: 6px;
+  left: 0;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--mint-mark);
+}
+
+/* The line joining this dot to the next */
+.route li:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  top: 18px;
+  bottom: -6px;
+  left: 5.5px;
+  width: 1px;
+  background: var(--line);
+}
+
+.route-name {
+  color: var(--ink);
+  font-family: var(--serif);
+  font-optical-sizing: auto;
+  font-size: 18px;
+  line-height: 1.3;
+}
+
+.route-note {
+  margin-top: 4px;
+  font-size: 14px;
+  line-height: 1.55;
+  text-wrap: balance;
+}
+
+/* The "now" stop: terracotta dot, with a soft ring that pulses twice
+   when the page opens, then rests (an agreed exception to §5.7) */
+.route li.route-now::before {
+  background: var(--terracotta);
+  animation: route-pulse 2.4s ease-out 0.6s 2;
+}
+
+@keyframes route-pulse {
+  0% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--terracotta) 50%, transparent);
+  }
+  100% {
+    box-shadow: 0 0 0 10px color-mix(in srgb, var(--terracotta) 0%, transparent);
+  }
+}
+
+.route-now .route-name {
+  color: var(--terracotta-ink);
+}
+
+@media (min-width: 900px) {
+  .route {
+    max-width: none;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    text-align: center;
+  }
+
+  .route li,
+  .route li:last-child {
+    padding: 32px 10px 0;
+  }
+
+  .route li::before {
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  /* The line runs from this dot's centre to the next one's */
+  .route li:not(:last-child)::after {
+    top: 5.5px;
+    bottom: auto;
+    left: 50%;
+    width: 100%;
+    height: 1px;
+  }
+
+  .route p {
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* ---------- The middle child (About): a short scene beside a Monet painting ---------- */
+/* Phones: painting above the text, full width. Wider screens: painting on
+   the left, scene on the right. The painting is never cropped. */
+
+.moment {
+  display: grid;
+  gap: 24px;
+  align-items: start; /* label lines up with the top of the painting */
+}
+
+.moment-art {
+  margin: 0;
+}
+
+.moment-art img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.moment-art figcaption {
+  margin-top: 8px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.moment-text .eyebrow {
+  margin-bottom: 10px;
+}
+
+.moment-text p + p {
+  margin-top: 16px;
+}
+
+@media (min-width: 768px) {
+  .moment {
+    grid-template-columns: 300px minmax(0, 1fr);
+    gap: 40px;
+  }
+}
+
+/* Desktop: a larger painting and a text column of a similar weight */
+@media (min-width: 1000px) {
+  .moment {
+    grid-template-columns: 420px minmax(0, 34em);
+    gap: 56px;
+  }
+}
+
+/* ---------- What I believe (About): forest band ---------- */
+
+.believe .eyebrow {
+  margin-bottom: 16px;
+}
+
+.believe h2 {
+  max-width: 24em;
+  margin-bottom: 16px;
+  line-height: 1.25;
+}
+
+.believe h2 + p {
+  color: var(--forest-soft);
+}
+
+/* The essay card: title in Bodoni, a small line beneath, then the white button */
+.believe-essay .believe-essay-title {
+  margin: 0;
+  color: var(--forest-ink);
+  font-family: var(--serif);
+  font-optical-sizing: auto;
+  font-size: 22px;
+  line-height: 1.3;
+}
+
+.believe-essay .believe-essay-meta {
+  margin: 8px 0 24px;
+  color: var(--forest-soft);
+  font-size: 14px;
+}
+
+/* ---------- Currently (About): reading, writing, thinking about ---------- */
+/* Three short entries, each above a fine rule; side by side on wider screens. */
+
+.currently {
+  display: grid;
+  gap: 24px;
+  margin: 0;
+}
+
+.currently > div {
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+
+.currently dt {
+  margin-bottom: 6px;
+  color: var(--ink);
+  font-family: var(--serif);
+  font-optical-sizing: auto;
+  font-size: 20px;
+  line-height: 1.3;
+}
+
+.currently dd {
+  margin: 0;
+  text-wrap: pretty; /* no single word left alone on the last line */
+}
+
+.currently-updated {
+  margin-top: 24px;
+  font-size: 13px;
+}
+
+@media (min-width: 768px) {
+  .currently {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 40px;
+  }
+}
+
+/* ---------- One question, four lenses (Thinking) ---------- */
+/* A flood in seven steps on a forest band. Choosing a lens lights the steps
+   it looks at and dims the rest; the panel beneath explains the lens. */
+
+.page-thinking .hero .hero-lede {
+  max-width: 42.5em; /* about 680px */
+}
+
+.lens-study h2 {
+  max-width: 20em;
+}
+
+/* The invitation to choose a lens: white, so it stands apart from the flood paragraph above */
+.lens-hint {
+  margin-top: 14px;
+  color: var(--forest-ink);
+}
+
+/* The flood in a public event (December 2021), with its source beneath */
+.lens-event {
+  max-width: 640px;
+  margin-top: 14px;
+  color: var(--forest-soft);
+}
+
+.lens-source {
+  margin-top: 6px;
+  color: var(--forest-soft);
+  font-size: 13px;
+}
+
+.lens-source + .lens-hint {
+  margin-top: 20px;
+}
+
+/* Lens buttons: pills that wrap on small screens */
+.lens-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 28px;
+}
+
+.lens-buttons button {
+  min-height: 44px;
+  padding: 10px 18px;
+  background: transparent;
+  color: var(--forest-ink);
+  border: 1px solid var(--forest-soft);
+  border-radius: 999px;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.3;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.lens-buttons button:hover {
+  background: color-mix(in srgb, var(--forest-soft) 15%, transparent);
+}
+
+.lens-buttons button[aria-pressed="true"] {
+  background: var(--mint-mark);
+  border-color: var(--mint-mark);
+  color: var(--ink);
+}
+
+/* The chain: seven cards joined by arrows. Phones: one under another,
+   arrows pointing down. Tablets: two to a row. Desktop: four, then three. */
+.chain {
+  --arrow: 28px; /* room for the arrow after each card */
+  display: flex;
+  flex-wrap: wrap;
+  row-gap: 0;
+  margin: 36px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.step {
+  position: relative;
+  width: 100%;
+  margin-bottom: var(--arrow);
+  padding: 18px 18px 20px;
+  background: var(--page);
+  border: 1px dashed transparent;
+  border-radius: 14px;
+  color: var(--ink-soft);
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.step:last-child {
+  margin-bottom: 0;
+}
+
+/* The arrow to the next card */
+.step:not(:last-child)::after {
+  content: "↓";
+  position: absolute;
+  left: 50%;
+  bottom: calc(-1 * var(--arrow));
+  width: var(--arrow);
+  margin-left: calc(-0.5 * var(--arrow));
+  color: var(--forest-soft);
+  font-size: 15px;
+  line-height: var(--arrow);
+  text-align: center;
+}
+
+@media (min-width: 600px) {
+  .chain {
+    row-gap: 16px;
+  }
+
+  .step {
+    width: calc(50% - var(--arrow));
+    margin: 0 var(--arrow) 0 0;
+  }
+
+  .step:not(:last-child)::after {
+    content: "→";
+    left: 100%;
+    top: 50%;
+    bottom: auto;
+    margin: -0.75em 0 0;
+  }
+}
+
+@media (min-width: 1000px) {
+  .step {
+    width: calc(25% - var(--arrow));
+  }
+}
+
+.step-icon {
+  display: block;
+  width: 32px;
+  height: 32px;
+  margin-bottom: 10px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  color: var(--terracotta); /* lit cards only: an agreed exception (§5.1) */
+  transition: color 0.2s ease;
+}
+
+.band-forest .step-title {
+  margin-bottom: 6px;
+  color: var(--ink);
+  font-size: 20px;
+  line-height: 1.25;
+  transition: color 0.2s ease;
+}
+
+.step-text {
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* Dim: an outline only, in pale mint */
+.step.is-dim {
+  background: transparent;
+  border-color: color-mix(in srgb, var(--forest-soft) 55%, transparent);
+  color: var(--forest-soft);
+}
+
+.step.is-dim .step-icon,
+.band-forest .step.is-dim .step-title {
+  color: var(--forest-soft);
+}
+
+/* The loop: back from the public purse to the next flood */
+.loop {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  max-width: none;
+  margin-top: 24px;
+  padding: 12px 20px;
+  border: 1px solid var(--mint-mark);
+  border-radius: 16px; /* a full pill from tablet width, once it fits on one line */
+  color: var(--forest-ink);
+  font-size: 15px;
+  line-height: 1.45;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+@media (min-width: 768px) {
+  .loop {
+    border-radius: 999px;
+  }
+}
+
+.loop-icon {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.loop.is-dim {
+  border-style: dashed;
+  border-color: color-mix(in srgb, var(--forest-soft) 55%, transparent);
+  color: var(--forest-soft);
+}
+
+/* The lens panel: name on the left, question and text on the right */
+.lens-panel {
+  margin-top: 40px;
+  padding-top: 32px;
+  border-top: 1px solid color-mix(in srgb, var(--forest-soft) 40%, transparent);
+}
+
+.lens-view {
+  display: grid;
+  gap: 16px;
+}
+
+.lens-view[hidden] {
+  display: none;
+}
+
+.lens-name .eyebrow {
+  margin-bottom: 8px;
+}
+
+.band-forest .lens-name h3 {
+  font-size: var(--text-section);
+  line-height: 1.2;
+}
+
+/* One line on what the lens is, under its name: small italic sans */
+.lens-tagline {
+  max-width: 26em;
+  margin-top: 10px;
+  color: var(--forest-soft);
+  font-size: var(--text-small);
+  font-style: italic;
+  line-height: 1.5;
+  text-wrap: pretty;
+}
+
+.lens-body p {
+  color: var(--forest-soft);
+}
+
+.band-forest .lens-body .lens-question {
+  margin-bottom: 10px;
+  color: var(--forest-ink);
+  font-family: var(--serif);
+  font-optical-sizing: auto;
+  font-style: italic;
+  font-size: 22px;
+  line-height: 1.35;
+}
+
+/* In practice: one line on what Nora does with the lens, a shade brighter */
+.band-forest .lens-body .lens-practice {
+  margin-top: 14px;
+  color: var(--forest-ink);
+}
+
+/* Invert, invert, invert: the last word turned upside down */
+.word-flip {
+  display: inline-block;
+  position: relative;
+  top: 0.14em; /* turning it over lifts it; this sets it back on the line */
+  transform: rotate(180deg);
+}
+
+/* "In practice" link: a small outlined pill */
+.pill-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  margin-top: 22px;
+  padding: 10px 18px;
+  border: 1px solid var(--forest-soft);
+  border-radius: 999px;
+  color: var(--forest-ink);
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.3;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+
+.pill-link:hover {
+  background: var(--forest-mark);
+  color: var(--forest-ink);
+}
+
+.pill-link span {
+  transition: transform 0.2s ease;
+}
+
+.pill-link:hover span {
+  transform: translateX(3px);
+}
+
+@media (min-width: 768px) {
+  .lens-view {
+    grid-template-columns: 220px minmax(0, 1fr);
+    gap: 24px;
+  }
+}
+
+/* Where I land: one statement in a mint card */
+/* A quiet close: body-size text, then one line in Bodoni italic */
+.land-statement {
+  text-wrap: pretty;
+}
+
+.land-statement + .land-statement {
+  margin-top: 12px;
+}
+
+/* The closing line: the statement ends on it, in Bodoni italic */
+.land-coda {
+  margin-top: 14px;
+  color: var(--ink);
+  font-family: var(--serif);
+  font-optical-sizing: auto;
+  font-style: italic;
+  font-size: 20px; /* the smallest comfortable size for Bodoni (§5.2) */
+  line-height: 1.4;
+  text-wrap: balance;
+}
+
+@media (min-width: 768px) {
+  .land-coda {
+    font-size: 22px;
+  }
+}
+
+/* ---------- Essays (Writing) ---------- */
+/* One essay per row, fine rules between.
+   Phones: thumbnail above the essay. Wider screens: in a narrow left column. */
+
+.essays {
+  border-top: 1px solid var(--line);
+}
+
+.essay {
+  display: grid;
+  gap: 12px;
+  padding: 36px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+@media (min-width: 768px) {
+  .essay {
+    grid-template-columns: 220px minmax(0, 1fr);
+    align-items: center; /* thumbnail centred beside the text */
+    gap: 24px;
+    padding: 48px 0;
+  }
+}
+
+/* Thumbnail: the picture used in each essay. Fills its column,
+   always in the same 16:9 frame so the rows line up. */
+.essay-thumb img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* The date, above the title */
+.essay-body .essay-meta {
+  margin-bottom: 6px;
+  color: var(--ink-soft);
+  font-size: var(--text-small);
+  line-height: 1.5;
+}
+
+.essay-title {
+  margin-bottom: 16px;
+  max-width: 22em;
+}
+
+.essay-title a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.essay-title a:hover {
+  color: var(--accent);
+}
+
+/* The pulled line: Nora's own words, in Inter, a little larger than body text */
+.essay-pull {
+  margin: 0;
+  color: var(--ink-soft);
+  font-family: var(--sans);
+  font-size: 17px;
+  line-height: 1.55;
+}
+
+.essay-body .essay-pull p {
+  text-wrap: balance; /* two even lines rather than a stray word */
+}
+
+@media (min-width: 768px) {
+  .essay-pull {
+    font-size: 18px;
+  }
+}
+
+.essay-body p {
+  text-wrap: pretty; /* no single word left alone on the last line */
+}
+
+.essay-body p + p {
+  margin-top: 8px;
+}
+
+.essay .text-link {
+  margin-top: 20px;
+}
+
+/* ---------- The cases (A Closer Look) ---------- */
+/* Four cards. The featured case (and CASE-04, so the grid ends evenly) span
+   the full width with the diagram on the left; the others sit two to a row
+   from 900px, and in one column below that.
+   "Read the case" opens a detail panel inside the card; an open card in the
+   two-column grid widens to the full row. Without JavaScript, all are open. */
+
+.page-cases .hero .cases-lede {
+  max-width: 640px;
+}
+
+.case-grid {
+  display: grid;
+  gap: 24px;
+}
+
+@media (min-width: 900px) {
+  .case-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .case-card.is-featured,
+  .case-card.is-wide,
+  .case-card.is-open {
+    grid-column: 1 / -1;
+  }
+}
+
+.case-card {
+  display: flex;
+  flex-direction: column;
+  padding: 24px 20px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  scroll-margin-top: 24px; /* breathing room when arriving from Home or Thinking */
+}
+
+@media (min-width: 768px) {
+  .case-card {
+    padding: 36px;
+  }
+}
+
+/* The diagram: centred, above a fine rule on the half-width cards */
+.case-figure {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 24px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid var(--line);
+}
+
+/* Text column: the footer row is pushed to the bottom,
+   so cards in the same row line up */
+.case-main {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.case-label {
+  margin-bottom: 10px;
+}
+
+.case-card h2 {
+  margin-bottom: 14px;
+  font-size: var(--text-section);
+}
+
+.case-desc {
+  text-wrap: pretty;
+}
+
+/* What changed: below a dashed rule, a small terracotta label, then the outcome */
+.case-changed {
+  margin-top: 20px;
+  padding-top: 18px;
+  border-top: 1px dashed var(--mint-mark);
+}
+
+.case-changed-label {
+  margin-bottom: 6px;
+  color: var(--terracotta-ink);
+  font-size: var(--text-eyebrow);
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+
+.case-changed-label + p {
+  color: var(--ink);
+}
+
+/* Footer row: lens pill on the left, Read the case on the right */
+.case-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 16px;
+  margin-top: auto;
+  padding-top: 28px;
+}
+
+/* Lens pill: a soft mint pill linking to the lens on Thinking */
+.lens-pill {
+  display: inline-block; /* keeps the space before the upside-down "invert" */
+  padding: 12px 18px; /* with the line height, a 44px tap target */
+  background: color-mix(in srgb, var(--mint-mark) 45%, var(--surface));
+  border-radius: 999px;
+  color: var(--forest);
+  font-size: var(--text-small);
+  font-weight: 500;
+  line-height: 20px;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+
+.lens-pill:hover {
+  background: var(--mint-mark);
+  color: var(--forest);
+}
+
+/* Read the case: a text button */
+.case-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 44px;
+  margin-left: auto;
+  padding: 0 4px;
+  background: none;
+  border: 0;
+  color: var(--accent);
+  cursor: pointer;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.case-toggle:hover {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.case-toggle[hidden] {
+  display: none;
+}
+
+/* The detail panel: what was done, and lessons learnt */
+.case-detail {
+  display: grid;
+  gap: 24px;
+  margin-top: 24px;
+  padding: 24px 20px;
+  background: var(--mint-wash);
+  border-radius: 16px;
+}
+
+.case-detail[hidden] {
+  display: none;
+}
+
+.case-card.is-open .case-detail {
+  animation: case-open 0.2s ease;
+}
+
+@keyframes case-open {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}
+
+@media (min-width: 768px) {
+  .case-detail {
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+    gap: 40px;
+    padding: 32px 36px;
+  }
+}
+
+.case-detail-label {
+  margin-bottom: 12px;
+  color: var(--accent);
+  font-family: var(--sans);
+  font-size: var(--text-eyebrow);
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+
+.case-did ul {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Each point with a small terracotta dot */
+.case-did li {
+  position: relative;
+  padding-left: 20px;
+}
+
+.case-did li::before {
+  content: "";
+  position: absolute;
+  top: 0.62em;
+  left: 2px;
+  width: 7px;
+  height: 7px;
+  background: var(--terracotta);
+  border-radius: 50%;
+}
+
+.case-learnt p {
+  color: var(--ink);
+  font-family: var(--serif);
+  font-optical-sizing: auto;
+  font-style: italic;
+  font-size: 20px;
+  line-height: 1.4;
+}
+
+/* A line still to come: shown in body style, like every placeholder */
+.case-learnt p.is-placeholder {
+  color: var(--ink-soft);
+  font-family: var(--sans);
+  font-style: normal;
+  font-size: var(--text-body);
+  line-height: 1.6;
+}
+
+/* Wide cards (featured and CASE-04): diagram on the left, text on the right.
+   The detail panel runs across the bottom. Stacked below 900px. */
+@media (min-width: 900px) {
+  .case-card.is-featured,
+  .case-card.is-wide {
+    display: grid;
+    grid-template-columns: minmax(0, 300px) minmax(0, 1fr);
+    column-gap: 40px;
+  }
+
+  .case-card.is-featured .case-detail,
+  .case-card.is-wide .case-detail {
+    grid-column: 1 / -1;
+  }
+
+  .case-card.is-wide .case-figure {
+    align-items: center;
+    padding: 0 40px 0 0;
+    margin: 0;
+    border-bottom: 0;
+    border-right: 1px solid var(--line);
+  }
+}
+
+/* The featured diagram sits in a pale mint panel */
+.case-card.is-featured .case-figure {
+  --diagram-fill: var(--mint-wash);
+  align-items: center;
+  padding: 24px 16px;
+  background: var(--mint-wash);
+  border-bottom: 0;
+  border-radius: 16px;
+}
+
+@media (min-width: 768px) {
+  .case-card.is-featured h2 {
+    font-size: 38px;
+  }
+}
+
+@media (min-width: 900px) {
+  .case-card.is-featured .case-figure {
+    margin-bottom: 0;
+  }
+}
+
+/* The small line drawings */
+.diagram {
+  display: block;
+  width: 240px;
+  max-width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.is-featured .diagram {
+  width: 300px;
+}
+
+.diagram .d-line {
+  fill: none;
+  stroke: var(--forest);
+  stroke-width: 1.75;
+}
+
+.diagram .d-thin {
+  stroke-width: 1.5;
+}
+
+.diagram .d-node {
+  fill: var(--forest);
+}
+
+.diagram .d-dot {
+  fill: var(--terracotta);
+}
+
+.diagram .d-shape {
+  fill: var(--diagram-fill, var(--surface));
+  stroke: var(--forest);
+  stroke-width: 1.75;
+}
+
+.diagram .d-bar {
+  stroke: var(--terracotta);
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+
+.diagram .d-label {
+  fill: var(--accent);
+  font-family: var(--sans);
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+}
+
+.diagram .d-label-strong {
+  fill: var(--ink);
+  font-size: 10px;
+}
+
+.diagram .d-label-mark {
+  fill: var(--terracotta-ink);
+}
+
+/* The drawings come alive when a case is opened.
+   Each round plays in about two seconds, then rests; assets/site.js plays
+   three rounds, then the drawing rests until the case is opened again. At rest, without JavaScript, or for visitors
+   who reduce motion, the drawing is exactly as above: the moving parts are
+   hidden and everything else is in place. Each part's start is set by --delay
+   in casefiles.html. An agreed exception to the motion rule (§5.7). */
+
+.diagram .d-pulse,
+.diagram .d-traveller {
+  opacity: 0;
+}
+
+.diagram .d-pulse {
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 1.5;
+}
+
+.diagram .d-traveller {
+  fill: var(--forest);
+}
+
+.diagram .d-pulse,
+.diagram .d-pop,
+.diagram .d-bar {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+/* CASE-03: a cover in the background colour slides away to the right,
+   so the three paths seem to draw themselves out from Today */
+.diagram .d-wipe {
+  fill: var(--diagram-fill, var(--surface));
+  transform: scaleX(0);
+  transform-box: fill-box;
+  transform-origin: right;
+}
+
+.is-playing .diagram .d-wipe {
+  animation: d-wipe 1.2s ease-in-out 0.15s backwards;
+}
+
+@keyframes d-wipe {
+  from { transform: scaleX(1); }
+  to { transform: scaleX(0); }
+}
+
+/* A dot appearing: grows in, just past full size, then settles */
+.is-playing .diagram .d-pop {
+  animation: d-pop 0.4s ease-out var(--delay, 0s) backwards;
+}
+
+@keyframes d-pop {
+  from { opacity: 0; transform: scale(0); }
+  70% { opacity: 1; transform: scale(1.3); }
+}
+
+/* CASE-01: a soft ring from the board, then each spoke draws outwards */
+.is-playing .diagram .d-pulse {
+  animation: d-pulse 1s ease-out 0.15s;
+}
+
+@keyframes d-pulse {
+  from { opacity: 0.7; transform: scale(1); }
+  to { opacity: 0; transform: scale(1.7); }
+}
+
+.is-playing .diagram .d-spoke {
+  stroke-dasharray: 1;
+  animation: d-draw 0.45s ease-out var(--delay, 0s) backwards;
+}
+
+@keyframes d-draw {
+  from { stroke-dashoffset: 1; }
+  to { stroke-dashoffset: 0; }
+}
+
+/* CASE-02: a dot travels once round the loop, lighting Draft, Check and
+   Refine as it passes, and rests at the arrowhead before fading */
+.diagram .d-orbit {
+  transform-box: view-box;
+  transform-origin: 120px 70px; /* the centre of the loop */
+}
+
+.is-playing .diagram .d-orbit {
+  animation: d-orbit 2.1s linear 0.15s;
+}
+
+@keyframes d-orbit {
+  from { opacity: 1; transform: rotate(0deg); }
+  85% { opacity: 1; transform: rotate(240deg); }
+  to { opacity: 0; transform: rotate(240deg); }
+}
+
+.is-playing .diagram .d-light {
+  animation: d-light 0.3s ease-out var(--delay, 0s) backwards;
+}
+
+@keyframes d-light {
+  from { opacity: 0.25; }
+}
+
+/* CASE-04: a dot runs from each way of going wrong and stops at its control,
+   which gives a small start as it holds */
+.is-playing .diagram .d-run {
+  animation: d-run 1.1s ease-out var(--delay, 0s) backwards;
+}
+
+@keyframes d-run {
+  from { opacity: 0; transform: translate(0, 0); }
+  10% { opacity: 1; }
+  70% { opacity: 1; transform: translate(var(--dx), var(--dy)); }
+  to { opacity: 0; transform: translate(var(--dx), var(--dy)); }
+}
+
+.is-playing .diagram .d-bar {
+  animation: d-hold 0.35s ease-out var(--delay, 0s);
+}
+
+@keyframes d-hold {
+  50% { transform: scaleY(1.35); }
+}
+
+/* ---------- Page not found (404) ---------- */
+
+.not-found .button {
+  margin-top: 32px;
+}
+
+/* ---------- Footer: contact block ---------- */
+
+.site-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px 24px;
+  padding-top: 24px;
+  padding-bottom: 28px;
+  border-top: 1px solid var(--line);
+}
+
+.site-footer {
+  align-items: flex-end;
+}
+
+.site-footer .eyebrow {
+  margin: 0 0 6px;
+}
+
+.footer-invite p {
+  font-size: var(--text-small);
+}
+
+/* Contact icons: solid ink shapes, each with a comfortable tap area */
+.icon-links {
+  display: flex;
+  gap: 4px;
+  margin: 0 -10px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.icon-links a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  color: var(--ink);
+  border-radius: 8px;
+  transition: color 0.2s ease;
+}
+
+.icon-links a:hover {
+  color: var(--accent);
+}
+
+.icon-links svg {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+}
+
+/* The envelope's flap, cut out of the solid shape in the background colour */
+.icon-links .icon-cut {
+  fill: none;
+  stroke: var(--surface);
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* On phones the icons sit under the invitation, lined up with its text */
+@media (max-width: 767px) {
+  .icon-links {
+    margin: 0 0 0 -10px;
+  }
+}
+
+.contact-links {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: var(--text-small);
+}
+
+.contact-links li + li::before {
+  content: "·";
+  padding: 0 0.5em;
+  color: var(--ink-soft);
+}
+
+.contact-links a {
+  display: inline-block;
+  padding: 14px 0; /* a comfortable tap area on phones... */
+  margin: -14px 0; /* ...without moving the links or the lines around them */
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.contact-links a:hover {
+  color: var(--accent);
+  text-decoration: underline;
+}
+
+/* ---------- Motion (§5.7) ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}

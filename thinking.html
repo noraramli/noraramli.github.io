@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Thinking · Nora Ramli</title>
+  <meta name="description" content="One question, four lenses. Who pays when the water rises? A catastrophic flood, examined through the four mental models Nora Ramli reaches for most.">
+  <!-- Share tags: how the page looks when a link is shared (e.g. on LinkedIn). The image address must be the full published address. -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Nora Ramli">
+  <meta property="og:title" content="Thinking · Nora Ramli">
+  <meta property="og:description" content="One question, four lenses. Who pays when the water rises? A catastrophic flood, examined through the four mental models Nora Ramli reaches for most.">
+  <meta property="og:image" content="https://noraramli.github.io/assets/img/share.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Nora Ramli: sustainability risk, governance and reporting. A reader, writer and keen observer of life.">
+  <link rel="stylesheet" href="assets/styles.css">
+  <!-- Favicon: a white Bodoni N on forest green -->
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/img/favicon-16.png">
+  <link rel="apple-touch-icon" href="assets/img/apple-touch-icon.png">
+</head>
+<body class="page-thinking">
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <div class="shell">
+    <!-- Header: repeated on every page; change all pages together -->
+    <header class="site-header wrap">
+      <a class="wordmark" href="index.html">Nora Ramli</a>
+      <!-- Phone menu: assets/site.js shows this button below 768px; without JavaScript the links stay visible -->
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav" hidden>Menu</button>
+      <nav class="site-nav" id="site-nav" aria-label="Main">
+        <ul>
+          <li><a href="about.html">About</a></li>
+          <li><a href="thinking.html" aria-current="page">Thinking</a></li>
+          <li><a href="writing.html">Writing</a></li>
+          <li><a href="casefiles.html">A Closer Look</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main id="main">
+      <!-- Intro: Nora's words (Thinking brief, final copy) -->
+      <section class="section hero wrap" aria-labelledby="hero-title">
+        <p class="eyebrow">Thinking</p>
+        <h1 id="hero-title">One question, <span class="mark">four lenses</span>.</h1>
+        <p class="hero-lede">A list of principles costs nothing; the proof lies in what they do when set against a real problem. So here is one: a catastrophic flood, followed from the first drop of rain to the last bill, examined through the four lenses I reach for most.</p>
+      </section>
+
+      <!-- The question: one flood, seven steps, four lenses.
+           All copy lives here in the page. assets/site.js only switches which lens is shown:
+           each lens lists the steps it lights (data-lit) and whether the loop lights (data-loop).
+           Without JavaScript, Systems thinking shows, with every step lit.
+           Each lens links to one case on casefiles.html; the lens pill on that case must match. -->
+      <section class="band-forest" aria-labelledby="question-title">
+        <div class="wrap lens-study" data-lens-study>
+          <p class="eyebrow">The question</p>
+          <h2 id="question-title">Who pays when <span class="mark">the water rises</span>?</h2>
+          <!-- The flood grounded in a public event; each figure names its public source (CLAUDE.md §7) -->
+          <p class="lens-event">December 2021: more than a month’s rain fell on the Klang Valley in a single day. Neighbourhoods with little memory of serious floods stood hip-deep in water, and losses across the country came to some RM6.1&nbsp;billion.</p>
+          <p class="lens-source">Rainfall: Ministry of Environment and Water, December 2021. Losses: Department of Statistics Malaysia, January 2022.</p>
+          <p class="lens-hint">Four mental models, each turned upon the same picture. Choose one, and see what it brings to light.</p>
+
+          <div class="lens-buttons" role="group" aria-label="Lenses">
+            <button type="button" aria-pressed="true" data-lens="systems">01 · Systems thinking</button>
+            <button type="button" aria-pressed="false" data-lens="antifragile">02 · Antifragile</button>
+            <button type="button" aria-pressed="false" data-lens="invert">03 · Invert, invert, <span class="word-flip">invert</span></button>
+            <button type="button" aria-pressed="false" data-lens="iteration">04 · Iteration loops</button>
+          </div>
+
+          <ol class="chain" aria-label="From the rain to the public purse">
+            <li class="step" data-step="rain">
+              <svg class="step-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 15a4 4 0 0 1-.6-7.95A5.5 5.5 0 0 1 17 8a3.5 3.5 0 0 1 .5 7z"/><path d="M8 18l-1 3M12 18l-1 3M16 18l-1 3"/></svg>
+              <h3 class="step-title">The rain falls</h3>
+              <p class="step-text">A December evening, and more rain than the drains were ever built for.</p>
+            </li>
+            <li class="step" data-step="ground">
+              <svg class="step-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 19c0-8 6-14 14-14 0 8-6 14-14 14z"/><path d="M5 19l8-8"/></svg>
+              <h3 class="step-title">Concrete, not green</h3>
+              <p class="step-text">Where field and wetland once drank the rain, the tarmac passes it on to the next street.</p>
+            </li>
+            <li class="step" data-step="home">
+              <svg class="step-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 11l8-6 8 6"/><path d="M6 10v5h12v-5"/><path d="M3 19c1.5-1 3-1 4.5 0s3 1 4.5 0 3-1 4.5 0 3 1 4.5 0"/></svg>
+              <h3 class="step-title">The home floods</h3>
+              <p class="step-text">The water finds the lowest floor first and, too often, the family with no upstairs to climb to.</p>
+            </li>
+            <li class="step" data-step="claim">
+              <svg class="step-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4"/><path d="M10 14l2 2 4-4"/></svg>
+              <h3 class="step-title">A claim, if insured</h3>
+              <p class="step-text">For some, a form and a settlement. For others, a mop and a long week.</p>
+            </li>
+            <li class="step" data-step="premium">
+              <svg class="step-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 17l6-6 4 4 6-6"/><path d="M15 9h5v5"/></svg>
+              <h3 class="step-title">Next year’s premium</h3>
+              <p class="step-text">The risk is now on the books, and the price follows it.</p>
+            </li>
+            <li class="step" data-step="lapse">
+              <svg class="step-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 3l7 3v5c0 4.5-3 8-7 10-4-2-7-5.5-7-10V6z"/><path d="M4 4l16 16"/></svg>
+              <h3 class="step-title">Cover lapses</h3>
+              <p class="step-text">Those with least to spare let it go first, just when they need it most.</p>
+            </li>
+            <li class="step" data-step="purse">
+              <svg class="step-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 9l9-5 9 5"/><path d="M4 9h16"/><path d="M6 11v6M10 11v6M14 11v6M18 11v6"/><path d="M3 20h18"/></svg>
+              <h3 class="step-title">The public purse</h3>
+              <p class="step-text">What insurance no longer carries, the state picks up, after the water has gone.</p>
+            </li>
+          </ol>
+
+          <p class="loop">
+            <svg class="loop-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 12a8 8 0 1 1-2.35-5.65"/><path d="M20 4v5h-5"/></svg>
+            <span>…and the next flood finds them poorer than the last. The loop closes.</span>
+          </p>
+
+          <div class="lens-panel" aria-live="polite">
+            <div class="lens-view" id="lens-systems" data-lens-view="systems" data-lit="rain ground home claim premium lapse purse" data-loop="true">
+              <div class="lens-name">
+                <p class="eyebrow">Through this lens</p>
+                <h3>Systems thinking</h3>
+                <p class="lens-tagline">Pull one thread, and somewhere across the cloth a seam gives way.</p>
+              </div>
+              <div class="lens-body">
+                <p class="lens-question">Where does the water go next?</p>
+                <p>The flood begins upstream, long before the rain: in every field and wetland paved over. Nature is the first line of defence, yet sits on no one’s balance sheet.</p>
+                <p class="lens-practice">Change a number, and little moves. Change what the business is for, and everything beneath it follows. I work where the leverage is – in the boardroom, where sustainability sets the tone rather than trailing behind it.</p>
+                <a class="pill-link" href="casefiles.html#case-01">In practice: Sustainability governance <span aria-hidden="true">→</span></a>
+              </div>
+            </div>
+
+            <div class="lens-view" id="lens-antifragile" data-lens-view="antifragile" data-lit="ground home lapse" data-loop="false" hidden>
+              <div class="lens-name">
+                <p class="eyebrow">Through this lens</p>
+                <h3>Antifragile</h3>
+                <p class="lens-tagline">A glass shatters under strain; a bone thickens where the weight falls. One is fragile, the other antifragile.</p>
+              </div>
+              <div class="lens-body">
+                <p class="lens-question">When the worst arrives, what breaks, and what grows stronger?</p>
+                <p>A neighbourhood that has stayed dry for thirty years is not safe, it is merely untested. No evidence of a flood is not evidence of no flood. The illusion of comfort from a long, dry run shatters as the water rises; only what was built expecting it still stands strong.</p>
+                <p class="lens-practice">Calm teaches a system nothing, until chaos comes along. I examine scenario after scenario, for the improbable is not the impossible, and the future no one rehearsed is the one that arrives.</p>
+                <a class="pill-link" href="casefiles.html#case-03">In practice: Scenario analysis framework <span aria-hidden="true">→</span></a>
+              </div>
+            </div>
+
+            <div class="lens-view" id="lens-invert" data-lens-view="invert" data-lit="premium lapse" data-loop="false" hidden>
+              <div class="lens-name">
+                <p class="eyebrow">Through this lens</p>
+                <h3>Invert, invert, <span class="word-flip">invert</span></h3>
+                <p class="lens-tagline">Understand how to fail, then avoid it.</p>
+              </div>
+              <div class="lens-body">
+                <p class="lens-question">How would one make this worse?</p>
+                <p>Price the risk perfectly, and the poorest are the first to drop out. The risk stays behind, uninsured, until the next flood comes due. Precision, pursued alone, is its own kind of folly.</p>
+                <p class="lens-practice">Before I trust a number, I ask how it could be wrong. Each answer becomes a control.</p>
+                <a class="pill-link" href="casefiles.html#case-04">In practice: Sustainability data controls <span aria-hidden="true">→</span></a>
+              </div>
+            </div>
+
+            <div class="lens-view" id="lens-iteration" data-lens-view="iteration" data-lit="rain purse" data-loop="true" hidden>
+              <div class="lens-name">
+                <p class="eyebrow">Through this lens</p>
+                <h3>Iteration loops</h3>
+                <p class="lens-tagline">Begin before it is perfect, and let each round feed the one after.</p>
+              </div>
+              <div class="lens-body">
+                <p class="lens-question">What does each flood teach the next?</p>
+                <p>Each flood is a lesson the system either learns or pays for again. Rebuild the house exactly as it stood, and the next flood finds it waiting. Rebuild it a little higher, a little wiser, and the loop begins to loosen.</p>
+                <p class="lens-practice">No piece of work is ever final, only the best version so far. I put it to use early, listen to what it gets wrong, and let the next round put it right.</p>
+                <a class="pill-link" href="casefiles.html#case-02">In practice: AI-assisted workflows <span aria-hidden="true">→</span></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- As one sees it: where Nora lands -->
+      <section class="section wrap" aria-labelledby="land-title">
+        <div class="panel-mint land">
+          <h2 id="land-title" class="eyebrow">As one sees it</h2>
+          <p class="land-statement">Nature’s wrath keeps no guest list, yet the most vulnerable are left with the most to mend. No one party can carry the burden alone: not the insurer, nor the state, nor the household.</p>
+          <p class="land-statement">Price the risk honestly, but look to Mother Nature.</p>
+          <p class="land-coda">Tend to her, and she will meet us halfway.</p>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer: repeated on every page; change all pages together -->
+    <footer class="site-footer wrap">
+      <div class="footer-invite">
+        <h2 class="eyebrow">Contact</h2>
+        <p>Curious about something? Get in touch.</p>
+      </div>
+      <!-- LinkedIn and GitHub marks from Simple Icons (simpleicons.org), CC0; envelope drawn for this site -->
+      <ul class="icon-links">
+        <li>
+          <a href="mailto:norah.ramli@gmail.com" aria-label="Email" title="norah.ramli@gmail.com">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M2.5 4h19A1.5 1.5 0 0 1 23 5.5v13a1.5 1.5 0 0 1-1.5 1.5h-19A1.5 1.5 0 0 1 1 18.5v-13A1.5 1.5 0 0 1 2.5 4z"/><path class="icon-cut" d="M2.5 6.5 12 13.25l9.5-6.75"/></svg>
+          </a>
+        </li>
+        <li>
+          <a href="https://www.linkedin.com/in/thisisnoraramli/" rel="me" aria-label="LinkedIn" title="LinkedIn">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.71 1.637-1.452 3.37-1.452 3.601 0 4.267 2.37 4.267 4.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+          </a>
+        </li>
+        <li>
+          <a href="https://github.com/noraramli" rel="me" aria-label="GitHub" title="GitHub">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+          </a>
+        </li>
+      </ul>
+    </footer>
+  </div>
+
+  <script src="assets/site.js" defer></script>
+</body>
+</html>
