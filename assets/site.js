@@ -32,6 +32,17 @@ document.querySelectorAll(".site-header").forEach(function (header) {
   });
 });
 
+/* ---------- The seedling hint (Home) ----------
+   Each time Home opens, the name shows beside the seedling (set in index.html
+   before the page paints), then folds in after a moment, a hint that pointing
+   at the seedling brings it back. */
+
+if (document.documentElement.classList.contains("seedling-hint")) {
+  setTimeout(function () {
+    document.documentElement.classList.remove("seedling-hint");
+  }, 1500);
+}
+
 /* ---------- Painting viewer (Home: "One field, one year") ----------
    One large painting with thumbnails beneath. Choosing a thumbnail swaps
    the large painting with a gentle fade. Nothing moves on its own.
@@ -225,4 +236,47 @@ document.querySelectorAll("[data-cases]").forEach(function (grid) {
     });
   }
   window.addEventListener("hashchange", openFromLink);
+});
+
+/* ---------- Pages that flip (At Play: Notes 2 and 4) ----------
+   Arrows (and swipe on phones) move between a note's pages, one at a time.
+   Without JavaScript, every page shows, one after another. */
+
+document.querySelectorAll("[data-flip]").forEach(function (note) {
+  var pages = Array.prototype.slice.call(note.querySelectorAll(".flip-page"));
+  var controls = note.querySelector(".flip-controls");
+  var prev = note.querySelector(".flip-prev");
+  var next = note.querySelector(".flip-next");
+  var count = note.querySelector(".flip-count");
+  var current = 0;
+
+  function show(index) {
+    current = Math.max(0, Math.min(pages.length - 1, index));
+    pages.forEach(function (page, i) {
+      page.classList.toggle("is-current", i === current);
+      page.setAttribute("aria-hidden", i === current ? "false" : "true");
+    });
+    count.textContent = (current + 1) + " of " + pages.length;
+    prev.disabled = current === 0;
+    next.disabled = current === pages.length - 1;
+  }
+
+  note.classList.add("is-flipping");
+  controls.hidden = false;
+  show(0);
+
+  prev.addEventListener("click", function () { show(current - 1); });
+  next.addEventListener("click", function () { show(current + 1); });
+
+  var startX = null;
+  note.addEventListener("touchstart", function (event) {
+    startX = event.touches[0].clientX;
+  }, { passive: true });
+  note.addEventListener("touchend", function (event) {
+    if (startX === null) return;
+    var distance = event.changedTouches[0].clientX - startX;
+    startX = null;
+    if (Math.abs(distance) < 40) return;
+    show(current + (distance < 0 ? 1 : -1));
+  });
 });

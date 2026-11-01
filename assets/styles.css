@@ -237,13 +237,100 @@ a:hover {
   text-decoration: none;
 }
 
+/* The unfurled name stays in ink, like the headings */
 .wordmark:hover {
-  color: var(--accent);
+  color: var(--ink);
 }
 
 /* Home only: the masthead carries the name, so the header wordmark is hidden */
-.page-home .wordmark {
-  display: none;
+/* The seedling before the name: a warm seed with a forest stem and two leaves,
+   the same on every page; pointing at it lifts the leaves and unfurls the name
+   (gentle hover states, §5.7). */
+.site-header {
+  align-items: center;
+}
+
+.wordmark {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+}
+
+.wm-seed {
+  flex: 0 0 auto;
+  width: 18px;
+  height: 23px;
+  overflow: visible;
+}
+
+.wm-seed-dot {
+  fill: var(--terracotta-ink);
+}
+
+/* Every page: the seedling stands grown; pointing at the name lifts the leaves a little */
+.wm-stem {
+  fill: none;
+  stroke: var(--forest);
+  stroke-width: 1.4;
+  stroke-linecap: round;
+}
+
+.wm-leaf {
+  fill: var(--forest);
+  stroke: var(--forest);
+  stroke-width: 1;
+  stroke-linejoin: round;
+  transform-origin: 8px 9px;
+  transition: transform 0.4s ease;
+}
+
+.wordmark:hover .wm-leaf:nth-of-type(2),
+.wordmark:focus-visible .wm-leaf:nth-of-type(2) {
+  transform: rotate(14deg) scale(1.08);
+}
+
+.wordmark:hover .wm-leaf:nth-of-type(3),
+.wordmark:focus-visible .wm-leaf:nth-of-type(3) {
+  transform: rotate(-14deg) scale(1.08);
+}
+
+/* A little room after the seedling, so pointing just past it still counts */
+.wordmark {
+  padding-right: 8px;
+}
+
+.wm-seed {
+  width: 20px;
+  height: 26px;
+}
+
+/* The name unfurls from the seedling when a visitor points at it (or reaches it by
+   keyboard), and folds back in after. The same on every page and every device.
+   The name stays readable to screen readers throughout. */
+.wm-reveal {
+  display: inline-block;
+  max-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateX(-8px);
+  transition: max-width 0.5s ease, opacity 0.35s ease, transform 0.5s ease;
+}
+
+.wordmark:hover .wm-reveal,
+.wordmark:focus-visible .wm-reveal {
+  max-width: 8em;
+  opacity: 1;
+  transform: none;
+}
+
+/* Home's one-off hint: the name starts out showing, then folds in (an agreed exception to §5.7) */
+.seedling-hint .wm-reveal {
+  max-width: 8em;
+  opacity: 1;
+  transform: none;
+  transition: none;
 }
 
 .site-nav {
@@ -2090,6 +2177,489 @@ a:hover {
 
 @keyframes d-hold {
   50% { transform: scaleY(1.35); }
+}
+
+/* ---------- At Play ---------- */
+/* One plate per game: the game framed like a painting, with notes pinned around it.
+   Notes are index cards: white, a small terracotta pin, a slight tilt on wide screens. */
+
+.page-play .hero .play-lede {
+  max-width: 34em;
+}
+
+/* Mint band: the full width of the page card, like the forest band */
+.band-mint {
+  padding-top: 56px;
+  padding-bottom: 64px;
+  background: var(--mint-wash);
+}
+
+@media (min-width: 768px) {
+  .band-mint {
+    padding-top: 72px;
+    padding-bottom: 88px;
+  }
+}
+
+.band-mint + .section {
+  padding-top: var(--section-space);
+}
+
+.plate-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 8px 24px;
+  margin-bottom: 36px;
+}
+
+.plate-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 10px;
+  color: var(--ink-soft);
+  font-size: var(--text-small);
+}
+
+.meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Small line icons, drawn for the site */
+.meta-icon {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: var(--accent);
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.meta-icon circle {
+  fill: var(--accent);
+  stroke: none;
+}
+
+.meta-icon + .meta-icon {
+  margin-left: -4px;
+}
+
+/* On narrow screens the two halves stack, so no dot is left hanging */
+@media (max-width: 479px) {
+  .meta-sep {
+    display: none;
+  }
+}
+
+/* Phones and tablets: one column, in reading order (the game, then notes 1 to 4) */
+.plate-grid {
+  display: grid;
+  gap: 28px;
+}
+
+/* The game and its caption travel together */
+.game-block {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Wide screens: notes 1 and 2 on the left, the game and note 3 in the centre (twice as wide), note 4 on the right.
+   Below 1200px the side columns grow too narrow, so the page keeps to one column. */
+@media (min-width: 1200px) {
+  .plate-grid {
+    grid-template-columns: 1fr 2fr 1fr;
+    grid-template-rows: auto auto auto 1fr; /* the last row soaks up spare height, so nothing gapes */
+    grid-template-areas:
+      "note1 game  note4"
+      "note2 game  note4"
+      "note2 note3 note4"
+      "note2 .     note4";
+    align-items: start;
+    gap: 28px 32px;
+  }
+
+  .game-block { grid-area: game; }
+  .note-1 { grid-area: note1; }
+  .note-2 { grid-area: note2; }
+  .note-3 { grid-area: note3; }
+  .note-4 { grid-area: note4; }
+}
+
+/* The game, in a forest-green mount. Nothing is laid over the picture. */
+.game-mount {
+  padding: 18px;
+  background: var(--forest);
+  border-radius: 14px;
+  box-shadow: 0 14px 32px -18px color-mix(in srgb, var(--forest) 70%, transparent);
+}
+
+@media (min-width: 768px) {
+  .game-mount {
+    padding: 28px;
+  }
+}
+
+.game-link {
+  display: block;
+  border-radius: 4px;
+}
+
+.band-mint .game-link:focus-visible {
+  outline-color: var(--forest-ink);
+}
+
+.game-shot {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--forest-ink) 8%, var(--forest));
+  color: var(--forest-soft); /* the alt text, if the picture is missing */
+  image-rendering: pixelated; /* keeps the pixel art crisp */
+}
+
+/* Under the frame: the caption on the left, the Play button on the right; the button wraps below on narrow screens */
+.game-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 20px;
+}
+
+.game-caption {
+  flex: 1 1 14em; /* lets the caption wrap onto two lines before the button drops below it */
+  font-size: var(--text-small);
+}
+
+.game-caption i {
+  color: var(--ink);
+}
+
+.button-pill {
+  min-height: 44px;
+  border-radius: 999px;
+}
+
+/* A note: an index card with a pin */
+.note {
+  position: relative;
+  padding: 26px 22px 22px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  box-shadow: 0 10px 24px -20px color-mix(in srgb, var(--ink) 60%, transparent);
+  container-type: inline-size;
+}
+
+.note-pin {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  margin-left: -5px;
+  background: var(--terracotta);
+  border-radius: 50%;
+}
+
+.note-label {
+  margin: 0 0 8px;
+  color: var(--accent);
+  font-size: var(--text-eyebrow);
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+
+.note h3 {
+  margin-bottom: 12px;
+  font-size: 22px;
+}
+
+.note p {
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.note .note-source {
+  margin-top: 14px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* The forest variant (note 2): light text on green */
+.note-forest {
+  background: var(--forest);
+  border-color: var(--forest);
+  color: var(--forest-ink);
+}
+
+.note-forest .note-label {
+  color: var(--forest-soft);
+}
+
+.note-forest h3 {
+  color: var(--forest-ink);
+}
+
+.note-forest .note-source {
+  color: var(--forest-soft);
+}
+
+.note-forest a {
+  color: var(--forest-ink);
+}
+
+.note-forest a:hover {
+  color: var(--forest-soft);
+}
+
+.note-forest :focus-visible {
+  outline-color: var(--forest-ink);
+}
+
+.note-forest .mark {
+  background-image: linear-gradient(
+    to bottom,
+    transparent 72%,
+    var(--forest-mark) 72%,
+    var(--forest-mark) 91%,
+    transparent 91%
+  );
+}
+
+/* A very slight tilt, alternating, on wide screens only */
+@media (min-width: 1200px) {
+  .note-1 { transform: rotate(-0.6deg); }
+  .note-2 { transform: rotate(0.5deg); }
+  .note-3 { transform: rotate(-0.4deg); }
+  .note-4 { transform: rotate(0.7deg); }
+}
+
+/* Note 3: the sketch beside the text when the card is wide enough */
+.note-split {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+@container (min-width: 440px) {
+  .note-split {
+    display: grid;
+    grid-template-columns: 44% 1fr;
+    align-items: start;
+    gap: 24px;
+  }
+}
+
+/* Ink sketches, in the manner of an old encyclopaedia plate */
+.note-figure {
+  margin: 0;
+}
+
+.note-figure-ruled {
+  margin: 4px 0 16px;
+  padding: 14px 0 12px;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.note-figure figcaption {
+  margin-top: 8px;
+  color: var(--ink-soft);
+  font-family: var(--serif);
+  font-optical-sizing: auto;
+  font-style: italic;
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+.sketch {
+  display: block;
+  width: 100%;
+  max-width: 280px;
+  height: auto;
+  margin: 0 auto;
+}
+
+.sketch .s-line,
+.sketch .s-thin,
+.sketch .s-seed,
+.sketch .s-root,
+.sketch .s-tide {
+  fill: none;
+  stroke: var(--ink-soft);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.sketch .s-line { stroke-width: 1.3; }
+.sketch .s-thin { stroke-width: 0.9; }
+.sketch .s-seed { stroke-width: 2; }
+.sketch .s-tide { stroke-width: 1; stroke-dasharray: 5 4; }
+.sketch .s-root { stroke-width: 1; stroke-dasharray: 3 3; }
+
+.sketch .s-fill {
+  fill: var(--surface);
+  stroke: var(--ink-soft);
+  stroke-width: 1.2;
+  stroke-linejoin: round;
+}
+
+.sketch .s-leader {
+  fill: none;
+  stroke: var(--terracotta);
+  stroke-width: 0.8;
+}
+
+.sketch .s-arrow,
+.sketch .s-arrow-head {
+  fill: none;
+  stroke: var(--terracotta);
+  stroke-width: 1.3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.sketch .s-arrow {
+  stroke-dasharray: 5 4;
+}
+
+.sketch .s-label {
+  fill: var(--ink-soft);
+  font-family: var(--sans);
+  font-size: 11px;
+  font-style: italic;
+}
+
+.note-flip [hidden] {
+  display: none;
+}
+
+/* Notes with pages (2 and 4): arrows flip one page at a time. All pages share one space,
+   so the card keeps the height of the longest. */
+.flip-kicker {
+  margin-bottom: 6px;
+  color: var(--accent);
+  font-style: italic;
+}
+
+.note p.flip-kicker,
+.note p.flip-count {
+  font-size: 13px;
+}
+
+.flip-page + .flip-page {
+  margin-top: 20px; /* without JavaScript, the pages simply follow one another */
+}
+
+.is-flipping .flip-pages {
+  display: grid;
+}
+
+.is-flipping .flip-page {
+  grid-area: 1 / 1;
+  margin-top: 0;
+  visibility: hidden;
+}
+
+.is-flipping .flip-page.is-current {
+  visibility: visible;
+}
+
+.flip-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
+}
+
+.note p.flip-count {
+  color: var(--ink-soft);
+}
+
+.flip-controls button {
+  width: 44px;
+  height: 44px;
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  font: 400 16px/1 var(--sans);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.flip-controls button:hover {
+  background: var(--mint-wash);
+}
+
+.flip-controls button:disabled {
+  opacity: 0.35;
+  cursor: default;
+  background: transparent;
+}
+
+/* On the forest card */
+.note-forest .flip-kicker,
+.note-forest p.flip-count {
+  color: var(--forest-soft);
+}
+
+.note-forest .flip-controls {
+  border-top-color: color-mix(in srgb, var(--forest-soft) 40%, transparent);
+}
+
+.note-forest .flip-controls button {
+  color: var(--forest-ink);
+  border-color: color-mix(in srgb, var(--forest-soft) 60%, transparent);
+}
+
+.note-forest .flip-controls button:hover {
+  background: var(--forest-mark);
+}
+
+.note-forest .flip-controls button:disabled {
+  background: transparent;
+}
+
+/* A hand-drawn pen stroke under a phrase, in terracotta (an agreed exception, §5.1).
+   The colour is written into the drawing as #C1693F, the same as --terracotta;
+   change both together. A phrase that breaks across lines gets a stroke on each line. */
+.scribble {
+  padding-bottom: 3px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 10' preserveAspectRatio='none'%3E%3Cpath d='M2 6C28 3 48 8 78 5.5S140 3 172 5.2 194 6.5 198 4.5' fill='none' stroke='%23C1693F' stroke-width='1.8' stroke-linecap='round' vector-effect='non-scaling-stroke'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 100% 9px;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+/* A note on use: a short centred closing note */
+.play-use {
+  text-align: center;
+}
+
+.play-use h2 {
+  margin-bottom: 14px;
+  font-size: 24px;
+}
+
+.play-use p {
+  max-width: 36em;
+  margin: 0 auto;
 }
 
 /* ---------- Page not found (404) ---------- */
