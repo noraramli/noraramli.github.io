@@ -4,12 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>At Play · Nora Ramli</title>
-  <meta name="description" content="Small games about climate and nature, with short notes to read before you play. Plate I: Mangrove Rush.">
+  <meta name="description" content="Small games about climate and nature, with short notes to read before you play. Plate I: Mangrove Rush. Plate II: Beach Cleanup.">
   <!-- Share tags: how the page looks when a link is shared (e.g. on LinkedIn). The image address must be the full published address. -->
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Nora Ramli">
   <meta property="og:title" content="At Play · Nora Ramli">
-  <meta property="og:description" content="Small games about climate and nature, with short notes to read before you play. Plate I: Mangrove Rush.">
+  <meta property="og:description" content="Small games about climate and nature, with short notes to read before you play. Plate I: Mangrove Rush. Plate II: Beach Cleanup.">
   <meta property="og:image" content="https://noraramli.github.io/assets/img/share.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -48,10 +48,33 @@
         <p class="hero-lede play-lede">Small games about large problems. Some ideas make more sense once you have had a go at them yourself.</p>
       </section>
 
+      <!-- The shelf: a small picture of each game. Choosing one shows its plate below, in place
+           (assets/site.js); Mangrove Rush shows first. Each is a link to its plate, so at-play.html#beach-cleanup
+           opens with that game chosen. Without JavaScript, every plate shows, one after another. -->
+      <nav class="play-shelf wrap" aria-label="Games">
+        <p class="shelf-hint">Choose a game<svg class="shelf-arrow" viewBox="0 0 34 30" aria-hidden="true" focusable="false"><path d="M4 5C22 3 30 14 20 24"/><path d="M21.6 18.2L20 24L25.8 22.4"/></svg></p>
+        <ul class="shelf-list">
+          <li>
+            <a class="shelf-item" href="#mangrove-rush" data-plate="mangrove-rush">
+              <span class="shelf-stand"><span class="shelf-mount"><img src="assets/img/mangrove-rush.png" width="960" height="640" alt=""></span></span>
+              <span class="shelf-plate">Plate I</span>
+              <span class="shelf-title"><span>Mangrove Rush</span></span>
+            </a>
+          </li>
+          <li>
+            <a class="shelf-item" href="#beach-cleanup" data-plate="beach-cleanup">
+              <span class="shelf-stand"><span class="shelf-mount"><img src="assets/img/beach-cleanup.png" width="960" height="640" alt=""></span></span>
+              <span class="shelf-plate">Plate II</span>
+              <span class="shelf-title"><span>Beach Cleanup</span></span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+
       <!-- A plate: one game, with four notes around it. Each plate is a self-contained block:
            to add Plate II, copy this whole <section> and change its contents and ids.
            Notes and sources are in Nora's words; each source opens in a new tab. -->
-      <section class="band-mint play-plate" aria-labelledby="plate-1-title">
+      <section class="band-mint play-plate" id="mangrove-rush" aria-labelledby="plate-1-title">
         <div class="wrap">
           <div class="plate-head">
             <div>
@@ -125,7 +148,7 @@
               <p class="note-label">Note 3</p>
               <div class="note-split">
                 <figure class="note-figure">
-                  <svg class="sketch" viewBox="0 0 252 206" role="img" aria-label="Ink sketch of a mangrove tree standing in tidal water, its arching prop roots reaching down into the mud.">
+                  <svg class="sketch" viewBox="0 0 252 206" data-draw role="img" aria-label="Ink sketch of a mangrove tree standing in tidal water, its arching prop roots reaching down into the mud.">
                     <!-- Canopy: overlapping crowns, drawn back to front -->
                     <circle class="s-fill" cx="70" cy="58" r="22"/>
                     <circle class="s-fill" cx="132" cy="58" r="22"/>
@@ -171,7 +194,7 @@
               <div class="flip-pages">
                 <div class="flip-page" id="note-4-page-1" role="group" aria-label="Page 1 of 2">
                   <figure class="note-figure note-figure-ruled">
-                    <svg class="sketch" viewBox="0 0 260 150" role="img" aria-label="Ink sketch of a mangrove seedling: a long, slender propagule hanging from a branch, and the same propagule planted upright in soft mud with its first two leaves.">
+                    <svg class="sketch" viewBox="0 0 260 150" data-draw role="img" aria-label="Ink sketch of a mangrove seedling: a long, slender propagule hanging from a branch, and the same propagule planted upright in soft mud with its first two leaves.">
                       <!-- A leafy branch, with the propagule hanging from it -->
                       <path class="s-line" d="M6 20C40 16 70 26 104 30"/>
                       <path class="s-fill" d="M18 17q8-12 20-6q-8 10-20 6z M41 14q9-11 19-4q-9 9-19 4z M80 22q9-10 20-3q-9 8-20 3z"/>
@@ -199,7 +222,7 @@
                 </div>
                 <div class="flip-page" id="note-4-page-2" role="group" aria-label="Page 2 of 2">
                   <figure class="note-figure note-figure-ruled">
-                    <svg class="sketch" viewBox="0 38 260 102" role="img" aria-label="Ink sketch of a geotube lying offshore: waves break against it, and on the calm mudflat behind it young mangrove seedlings stand in a row.">
+                    <svg class="sketch" viewBox="0 38 260 102" data-draw role="img" aria-label="Ink sketch of a geotube lying offshore: waves break against it, and on the calm mudflat behind it young mangrove seedlings stand in a row.">
                       <!-- The shore, and the mudflat reaching out to sea -->
                       <path class="s-line" d="M6 70H40C56 70 64 84 72 96"/>
                       <path class="s-line" d="M6 96H254"/>
@@ -238,6 +261,144 @@
               </div>
             </article>
 
+          </div>
+        </div>
+      </section>
+
+      <!-- Plate II: Beach Cleanup. Notes and sources are in Nora's words; each source opens in a new tab. -->
+      <section class="band-mint play-plate" id="beach-cleanup" aria-labelledby="plate-2-title">
+        <div class="wrap">
+          <div class="plate-head">
+            <div>
+              <p class="eyebrow">Plate II · Ocean plastic</p>
+              <h2 id="plate-2-title">Beach Cleanup</h2>
+            </div>
+            <p class="plate-meta">
+              <span class="meta-item"><svg class="meta-icon" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><rect x="2" y="3.5" width="16" height="13" rx="2"/><path d="M2 7.5h16"/><circle cx="4.75" cy="5.5" r=".6"/><circle cx="6.75" cy="5.5" r=".6"/></svg>Plays in your browser</span>
+              <span class="meta-sep" aria-hidden="true">·</span>
+              <span class="meta-item"><svg class="meta-icon" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><rect x="1.5" y="3.5" width="13" height="9" rx="1.5"/><path d="M6 16h4M8 12.5V16"/></svg><svg class="meta-icon" viewBox="0 0 20 20" aria-hidden="true" focusable="false"><rect x="6" y="2.5" width="8" height="15" rx="2"/><path d="M9 15h2"/></svg>Desktop and phone</span>
+            </p>
+          </div>
+
+          <div class="plate-grid grid-three-notes">
+            <div class="game-block">
+              <div class="game-mount">
+                <a class="game-link" href="https://noraramli.itch.io/beach-cleanup" target="_blank" rel="noopener">
+                  <img class="game-shot" src="assets/img/beach-cleanup.png" width="960" height="640" alt="Beach Cleanup title screen: a pixel-art beach with two volunteers in high-visibility vests beside their rubbish bags, a family on a picnic mat, litter on the sand and a sign reading Welcome to Seashell Bay.">
+                  <span class="visually-hidden"> (opens in a new tab)</span>
+                </a>
+              </div>
+              <div class="game-foot">
+                <p class="game-caption"><i>Beach Cleanup</i>, 2026. Clean the beach. Save the ocean.</p>
+                <a class="button button-pill" href="https://noraramli.itch.io/beach-cleanup" target="_blank" rel="noopener">Play here <span aria-hidden="true">→</span><span class="visually-hidden"> (opens in a new tab)</span></a>
+              </div>
+            </div>
+
+            <!-- Note 1: two pages with arrows (assets/site.js). Without JavaScript, both pages show in turn. -->
+            <article class="note note-1 note-flip" aria-labelledby="plate-2-note-1-title" data-flip>
+              <span class="note-pin" aria-hidden="true"></span>
+              <p class="note-label">Note 1</p>
+              <h3 id="plate-2-note-1-title">What is <span class="mark">marine litter</span>?</h3>
+              <div class="flip-pages">
+                <div class="flip-page" id="plate-2-note-1-page-1" role="group" aria-label="Page 1 of 2">
+                  <p>Marine litter is any lasting, man-made solid material that ends up in the sea or on the coast, whether it was dropped, dumped or lost. Most of it is plastic, which is why it lingers: a bottle or a bag doesn’t rot away, it just breaks into smaller and smaller pieces.</p>
+                  <p class="note-source">Source: <a href="https://leap.unep.org/en/knowledge/toolkits/plastic/glossary/marine-litter" target="_blank" rel="noopener">UNEP Law and Environment Assistance Platform<span class="visually-hidden"> (opens in a new tab)</span></a></p>
+                </div>
+                <div class="flip-page" id="plate-2-note-1-page-2" role="group" aria-label="Page 2 of 2">
+                  <p>In its 2021 global assessment, the UN Environment Programme found that <span class="scribble">plastics are the largest, most harmful</span> and most persistent part of marine litter, making up <span class="scribble">at least 85%</span> of it.</p>
+                  <p class="note-source">Source: <a href="https://www.unep.org/en/publications/report/pollution-solution-global-assessment-marine-litter-and-plastic-pollution" target="_blank" rel="noopener">UNEP, 2021<span class="visually-hidden"> (opens in a new tab)</span></a></p>
+                </div>
+              </div>
+              <div class="flip-controls" hidden>
+                <button class="flip-prev" type="button" aria-label="Previous page"><span aria-hidden="true">←</span></button>
+                <p class="flip-count" aria-live="polite">1 of 2</p>
+                <button class="flip-next" type="button" aria-label="Next page"><span aria-hidden="true">→</span></button>
+              </div>
+            </article>
+
+            <article class="note note-2" aria-labelledby="plate-2-note-2-title">
+              <span class="note-pin" aria-hidden="true"></span>
+              <p class="note-label">Note 2</p>
+              <div class="note-split">
+                <figure class="note-figure">
+                  <svg class="sketch" viewBox="0 0 260 150" data-draw role="img" aria-label="Ink sketch of one plastic cup's journey: left on a pavement, washed into a drain, carried down a river to the sea, and left on a beach by the tide.">
+                    <!-- For the drawing that draws itself (assets/site.js): a mask that uncovers the dashed
+                         trail along its way. At rest the whole trail shows. -->
+                    <defs>
+                      <mask id="plate-2-trail" maskUnits="userSpaceOnUse" x="0" y="0" width="260" height="150">
+                        <path class="draw-trail" d="M33 36C50 26 80 34 90 50L92 56L92 78C94 82 96 84 98 86C120 92 140 100 158 106C166 110 172 113 178 114C202 110 216 88 222 64L232 51" fill="none" stroke="#fff" stroke-width="16" stroke-linecap="round" pathLength="1" stroke-dasharray="1 1" stroke-dashoffset="0"/>
+                      </mask>
+                    </defs>
+                    <!-- The pavement, the kerb and the road -->
+                    <path class="s-line" d="M6 44H72V54H112"/>
+                    <!-- A plastic cup, left on the pavement -->
+                    <g>
+                      <path class="s-fill" d="M27 30H39L37 44H29Z"/>
+                      <path class="s-thin" d="M25.5 30H40.5"/>
+                    </g>
+                    <!-- A drain in the road, and the pipe beneath it -->
+                    <path class="s-line" d="M84 54V60H100V54"/>
+                    <path class="s-thin" d="M88 54V60M92 54V60M96 54V60M92 60V78"/>
+                    <!-- The river, winding out to sea -->
+                    <path class="s-line" d="M78 80C110 78 132 92 168 98M78 96C108 94 128 108 164 114"/>
+                    <path class="s-thin" d="M100 89q6-3 12 0M132 100q6-3 12 0"/>
+                    <!-- The sea -->
+                    <path class="s-line" d="M160 122q7-5 14 0t14 0t14 0t14 0t14 0t14 0"/>
+                    <path class="s-thin" d="M168 136q7-5 14 0t14 0t14 0t14 0t14 0"/>
+                    <!-- A beach, the tide lapping at it, and the cup again, washed up -->
+                    <path class="s-line" d="M170 66C196 62 222 60 254 58"/>
+                    <path class="s-thin" d="M176 78q6-4 12 0t12 0t12 0t12 0t12 0t12 0"/>
+                    <g>
+                      <path class="s-fill" d="M226 50L238 46L240 52L228 56Z"/>
+                      <path class="s-thin" d="M238.6 44.6L241.4 53.4"/>
+                    </g>
+                    <!-- The way it went: pavement to drain, down the river, out to sea and back -->
+                    <g mask="url(#plate-2-trail)">
+                      <path class="s-arrow" d="M42 36C62 28 82 38 90 50"/>
+                      <path class="s-arrow" d="M98 86C120 92 140 100 158 106"/>
+                      <path class="s-arrow" d="M178 114C202 110 216 88 222 64"/>
+                      <path class="s-arrow-head" d="M217.8 68.3L222 64L223.6 69.8"/>
+                    </g>
+                    <!-- Labels, joined by fine leader lines -->
+                    <path class="s-leader" d="M100 60L108 66M80 104L72 116M246 128L246 138M232 47L232 38"/>
+                    <text class="s-label" x="6" y="60">pavement</text>
+                    <text class="s-label" x="110" y="72">drain</text>
+                    <text class="s-label" x="58" y="126">river</text>
+                    <text class="s-label" x="246" y="148" text-anchor="middle">sea</text>
+                    <text class="s-label" x="232" y="34" text-anchor="middle">beach</text>
+                  </svg>
+                  <figcaption>Fig. 4. One plastic cup, from pavement to beach.</figcaption>
+                </figure>
+                <div>
+                  <h3 id="plate-2-note-2-title">Where it <span class="mark">goes</span></h3>
+                  <p>Follow one plastic cup. It’s left on a pavement after a run. The next storm washes it into a drain, the drain empties into a river, and the river carries it to the sea. Weeks or years later, the tide brings it back and leaves it on a beach, far from where it was dropped.</p>
+                  <p class="note-source">Source: <a href="https://theoceancleanup.com/scientific-publications/more-than-1000-rivers-account-for-80-of-global-riverine-plastic-emissions-into-the-ocean/" target="_blank" rel="noopener">Meijer et al., 2021<span class="visually-hidden"> (opens in a new tab)</span></a></p>
+                </div>
+              </div>
+            </article>
+
+            <!-- Note 3: two pages with arrows (assets/site.js). Without JavaScript, both pages show in turn. -->
+            <article class="note note-3 note-forest note-flip" aria-labelledby="plate-2-note-3-title" data-flip>
+              <span class="note-pin" aria-hidden="true"></span>
+              <p class="note-label">Note 3</p>
+              <h3 id="plate-2-note-3-title">Two ways to <span class="mark">tackle it</span></h3>
+              <div class="flip-pages">
+                <div class="flip-page" id="plate-2-note-3-page-1" role="group" aria-label="Page 1 of 2">
+                  <p class="flip-kicker">Downstream</p>
+                  <p><span class="scribble">Clean up what’s already there</span>. Beach cleanups remove litter before it harms wildlife or breaks into microplastics, and they tell us what’s out there. In 2025, more than 8,300 volunteers collected over 28,500kg of rubbish from Malaysia’s coastlines. Drink bottles, cigarette ends and plastic shopping bags topped the list, and 97% of what they found would never break down naturally.</p>
+                  <p class="note-source">Source: <a href="https://malaymail.com/news/life/2025/11/27/volunteers-remove-28500kg-of-trash-from-malaysias-shores-for-annual-cleanup-effort/199865" target="_blank" rel="noopener">Malay Mail, 2025<span class="visually-hidden"> (opens in a new tab)</span></a></p>
+                </div>
+                <div class="flip-page" id="plate-2-note-3-page-2" role="group" aria-label="Page 2 of 2">
+                  <p class="flip-kicker">Upstream</p>
+                  <p><span class="scribble">Stop it at the source</span>. This means making less waste in the first place, through rules (bans and charges on single-use items), better design (packaging that can be reused or recycled) and everyday habits (carrying your own bottle and bag).</p>
+                </div>
+              </div>
+              <div class="flip-controls" hidden>
+                <button class="flip-prev" type="button" aria-label="Previous page"><span aria-hidden="true">←</span></button>
+                <p class="flip-count" aria-live="polite">1 of 2</p>
+                <button class="flip-next" type="button" aria-label="Next page"><span aria-hidden="true">→</span></button>
+              </div>
+            </article>
           </div>
         </div>
       </section>

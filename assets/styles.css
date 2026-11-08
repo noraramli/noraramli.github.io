@@ -2205,6 +2205,201 @@ a:hover {
   padding-top: var(--section-space);
 }
 
+/* The shelf: a small picture of each game, standing on an ink-drawn shelf under the intro, in
+   the sketchbook manner of the notes below. The chosen one lifts a little and takes the dark
+   frame, with the highlighter under its title. */
+.play-shelf {
+  padding-bottom: 48px;
+  text-align: center;
+}
+
+/* "Choose a game", as a handwritten aside, with a small ink arrow down to the pictures */
+.shelf-hint {
+  margin: 0 auto 10px;
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 22px;
+  font-style: italic;
+  line-height: 1.3;
+}
+
+.shelf-arrow {
+  display: inline-block;
+  width: 30px;
+  height: 26px;
+  margin-left: 8px;
+  vertical-align: -14px;
+  fill: none;
+  stroke: var(--ink-soft);
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* The row of games. Sized for two; widen max-width as more are added. */
+.shelf-list {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px 18px;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 10px 20px 0;
+  list-style: none;
+  box-sizing: border-box;
+}
+
+
+/* Side by side even on a phone: each shares the row, up to 200px wide */
+.shelf-list li {
+  flex: 1 1 0;
+  max-width: 200px;
+  min-width: 0;
+}
+
+.shelf-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  color: var(--ink);
+  text-decoration: none;
+  border-radius: 12px;
+}
+
+/* Each picture stands on its part of the shelf; the parts meet across the gap, so it reads as one plank */
+.shelf-stand {
+  position: relative;
+  display: block;
+  width: 100%;
+  margin-bottom: 18px;
+  padding-bottom: 7px;
+}
+
+.shelf-stand::after {
+  content: "";
+  position: absolute;
+  left: -10px;
+  right: -10px;
+  bottom: 0;
+  height: 4px;
+  border-top: 1.5px solid var(--ink-soft);
+  border-bottom: 1px solid var(--ink-soft);
+}
+
+.shelf-mount {
+  display: block;
+  width: 100%;
+  padding: 6px;
+  background: var(--mint-mark);
+  border-radius: 10px;
+  box-shadow: 0 8px 14px -10px color-mix(in srgb, var(--forest) 55%, transparent);
+  transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.shelf-mount img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+  image-rendering: pixelated;
+}
+
+.shelf-plate {
+  color: var(--accent);
+  font-family: var(--serif);
+  font-size: 16px;
+  font-style: italic;
+  line-height: 1.3;
+}
+
+.shelf-title {
+  font-family: var(--serif);
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.3;
+  padding: 0 0.04em;
+}
+
+.shelf-item:hover .shelf-mount {
+  background: var(--forest-mark);
+  transform: translateY(-3px);
+}
+
+.shelf-item:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 6px;
+}
+
+.shelf-item[aria-current="true"] .shelf-mount {
+  background: var(--forest);
+  box-shadow: 0 16px 22px -12px color-mix(in srgb, var(--forest) 70%, transparent);
+  transform: translateY(-6px);
+}
+
+/* (On the inner span, line by line, so a title that wraps on a phone is marked on each line) */
+.shelf-item[aria-current="true"] .shelf-title > span {
+  background-image: linear-gradient(to bottom, transparent 72%, var(--mint-mark) 72%, var(--mint-mark) 91%, transparent 91%);
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shelf-mount { transition: none; }
+}
+
+/* With the shelf at work, only the chosen plate shows, fading in gently */
+.has-shelf .play-plate[hidden] {
+  display: none;
+}
+
+.has-shelf .play-plate.is-shown {
+  animation: plate-in 0.3s ease;
+}
+
+@keyframes plate-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .has-shelf .play-plate.is-shown { animation: none; }
+}
+
+/* One plate after another (without JavaScript): a fine rule between them, so each game reads as its own */
+.play-plate + .play-plate {
+  padding-top: 0;
+}
+
+.play-plate + .play-plate > .wrap {
+  border-top: 1px solid var(--line);
+  padding-top: 56px;
+}
+
+@media (min-width: 768px) {
+  .play-plate + .play-plate > .wrap {
+    padding-top: 72px;
+  }
+}
+
+/* With the shelf, one plate shows at a time, so each keeps the band's own spacing */
+.has-shelf .play-plate + .play-plate {
+  padding-top: 56px;
+}
+
+.has-shelf .play-plate + .play-plate > .wrap {
+  border-top: 0;
+  padding-top: 0;
+}
+
+@media (min-width: 768px) {
+  .has-shelf .play-plate + .play-plate {
+    padding-top: 72px;
+  }
+}
+
 .plate-head {
   display: flex;
   flex-wrap: wrap;
@@ -2289,6 +2484,16 @@ a:hover {
   .note-2 { grid-area: note2; }
   .note-3 { grid-area: note3; }
   .note-4 { grid-area: note4; }
+
+  /* A plate with three notes (Plate II): Note 1 on the left, the game and Note 2 in the centre,
+     Note 3 on the right */
+  .plate-grid.grid-three-notes {
+    grid-template-rows: auto auto 1fr;
+    grid-template-areas:
+      "note1 game  note3"
+      "note1 note2 note3"
+      "note1 .     note3";
+  }
 }
 
 /* The game, in a forest-green mount. Nothing is laid over the picture. */
@@ -2387,6 +2592,11 @@ a:hover {
 .note p {
   font-size: 15px;
   line-height: 1.6;
+}
+
+/* A note with more than one paragraph: a little space between them */
+.note p:not(.flip-kicker) + p:not(.note-source) {
+  margin-top: 10px;
 }
 
 .note .note-source {

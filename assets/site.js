@@ -251,11 +251,14 @@ document.querySelectorAll("[data-flip]").forEach(function (note) {
   var current = 0;
 
   function show(index) {
+    var before = current;
     current = Math.max(0, Math.min(pages.length - 1, index));
     pages.forEach(function (page, i) {
       page.classList.toggle("is-current", i === current);
       page.setAttribute("aria-hidden", i === current ? "false" : "true");
     });
+    // Tells a drawing on the page just turned to that it has come into view (see below)
+    if (current !== before) pages[current].dispatchEvent(new CustomEvent("page-shown"));
     count.textContent = (current + 1) + " of " + pages.length;
     prev.disabled = current === 0;
     next.disabled = current === pages.length - 1;
@@ -279,4 +282,147 @@ document.querySelectorAll("[data-flip]").forEach(function (note) {
     if (Math.abs(distance) < 40) return;
     show(current + (distance < 0 ? 1 : -1));
   });
+});
+
+/* ---------- The game shelf (At Play) ----------
+   A small picture of each game sits under the intro. Choosing one shows that
+   game's plate below, in place, and hides the others; Mangrove Rush shows
+   first. The address follows the choice (at-play.html#beach-cleanup), so a link
+   can open the page with any game chosen, and Back returns to the last one.
+   Without JavaScript, every plate shows, one after another. */
+
+document.querySelectorAll(".play-shelf").forEach(function (shelf) {
+  var links = Array.prototype.slice.call(shelf.querySelectorAll("[data-plate]"));
+  var plates = links.map(function (link) {
+    return document.getElementById(link.getAttribute("data-plate"));
+  });
+  if (plates.some(function (plate) { return !plate; })) return;
+
+  function show(id) {
+    plates.forEach(function (plate, i) {
+      var chosen = plate.id === id;
+      var appearing = chosen && plate.hidden;
+      plate.hidden = !chosen;
+      // Tells a drawing on the plate that it has just come into view (see below)
+      if (appearing) plate.dispatchEvent(new CustomEvent("plate-shown"));
+      plate.classList.toggle("is-shown", chosen);
+      if (chosen) links[i].setAttribute("aria-current", "true");
+      else links[i].removeAttribute("aria-current");
+    });
+  }
+
+  // The game named in the address, or else the first
+  function fromAddress() {
+    var id = location.hash.slice(1);
+    return plates.some(function (plate) { return plate.id === id; }) ? id : plates[0].id;
+  }
+
+  // (Opened from a link with a game in the address, the page lands on that game.)
+  document.body.classList.add("has-shelf");
+  show(fromAddress());
+
+  links.forEach(function (link) {
+    link.addEventListener("click", function (event) {
+      event.preventDefault();
+      var id = link.getAttribute("data-plate");
+      if (location.hash !== "#" + id) history.pushState(null, "", "#" + id);
+      show(id);
+    });
+  });
+
+  window.addEventListener("popstate", function () { show(fromAddress()); });
+  window.addEventListener("hashchange", function () { show(fromAddress()); });
+});
+
+/* ---------- Drawings that draw themselves (At Play: Figs. 1 to 4) ----------
+   Each ink sketch marked data-draw draws itself line by line, as if inked by
+   hand: each stroke in turn, in the order it sits in the drawing, then the
+   labels. Dashed lines (tides, roots, distance marks), which cannot be inked
+   one dash at a time, fade in at their turn; a dashed trail behind a mask
+   (Fig. 4) is uncovered along its way. A drawing plays once when its game's
+   plate comes into view (as the page opens, when it is chosen on the shelf,
+   or from a link to it), or when its page of a note is turned to, then
+   rests on the finished drawing. Visitors who reduce motion, and anyone
+   without JavaScript, see the finished drawings only. */
+
+document.querySelectorAll("[data-draw]").forEach(function (svg) {
+  var plate = svg.closest(".play-plate");
+  var page = svg.closest(".flip-page");
+  var trail = svg.querySelector(".draw-trail");   // a mask that uncovers a dashed trail
+  var calm = window.matchMedia("(prefers-reduced-motion: reduce)");
+  var LINES = 4800;   // milliseconds to ink every line
+  var LABEL = 240;    // milliseconds for each label to appear
+  var frame = null;
+
+  // Everything to draw, in order. Each line's time follows its length.
+  var steps = [];
+  svg.querySelectorAll("path, circle, ellipse, text, g[mask]").forEach(function (el) {
+    var group = el.closest("g[mask]");
+    if (el.closest("defs") || (group && group !== el)) return;
+    var tag = el.tagName.toLowerCase();
+    if (tag === "text") steps.push({ el: el, kind: "label" });
+    else if (el === group) steps.push({ el: el, kind: "trail", length: 300 });
+    else {
+      var dashed = getComputedStyle(el).strokeDasharray;
+      var filled = el.classList.contains("s-fill");
+      steps.push({ el: el, kind: dashed && dashed !== "none" ? "fade" : "line", length: el.getTotalLength(), filled: filled });
+    }
+  });
+  var total = steps.reduce(function (sum, step) { return sum + (step.length || 0); }, 0);
+  var clock = 0;
+  steps.forEach(function (step) {
+    step.time = step.kind === "label" ? LABEL : Math.max(80, LINES * step.length / total);
+    step.start = clock;
+    clock += step.time;
+  });
+  var duration = clock;
+
+  function set(step, p) {
+    if (step.kind === "label" || step.kind === "fade") step.el.style.opacity = String(p);
+    else if (step.kind === "trail") { if (trail) trail.style.strokeDashoffset = String(1 - p); }
+    else {
+      step.el.style.strokeDasharray = step.length + " " + step.length;
+      step.el.style.strokeDashoffset = String(step.length * (1 - p));
+      // A filled shape (a tree's crown, a cup) is filled once its outline begins
+      if (step.filled) step.el.style.fillOpacity = p > 0 ? "" : "0";
+    }
+  }
+
+  // The finished drawing, just as it is in the page
+  function rest() {
+    if (frame) cancelAnimationFrame(frame);
+    frame = null;
+    steps.forEach(function (step) {
+      step.el.style.strokeDasharray = "";
+      step.el.style.strokeDashoffset = "";
+      step.el.style.opacity = "";
+      step.el.style.fillOpacity = "";
+    });
+    if (trail) trail.style.strokeDashoffset = "0";
+  }
+
+  function hiddenNow() {
+    return (plate && plate.hidden) || (page && page.closest(".is-flipping") && !page.classList.contains("is-current"));
+  }
+
+  function play() {
+    if (calm.matches || hiddenNow()) return;
+    if (frame) cancelAnimationFrame(frame);
+    var startedAt = performance.now();
+    steps.forEach(function (step) { set(step, 0); });
+    function tick(now) {
+      var elapsed = now - startedAt;
+      if (elapsed >= duration || hiddenNow()) return rest();
+      steps.forEach(function (step) {
+        set(step, Math.max(0, Math.min(1, (elapsed - step.start) / step.time)));
+      });
+      frame = requestAnimationFrame(tick);
+    }
+    frame = requestAnimationFrame(tick);
+  }
+
+  if (plate) plate.addEventListener("plate-shown", play);
+  if (page) page.addEventListener("page-shown", play);
+  // In view as the page opens (the first game, or one opened by its link): it draws now
+  if (document.body.classList.contains("has-shelf")) play();
 });
