@@ -341,8 +341,10 @@ document.querySelectorAll(".play-shelf").forEach(function (shelf) {
    one dash at a time, fade in at their turn; a dashed trail behind a mask
    (Fig. 4) is uncovered along its way. A drawing plays once when its game's
    plate comes into view (as the page opens, when it is chosen on the shelf,
-   or from a link to it), or when its page of a note is turned to, then
-   rests on the finished drawing. Visitors who reduce motion, and anyone
+   or from a link to it), or when its page of a note is turned to, but only
+   once the drawing is on screen, so a visitor who scrolls down later still
+   sees it drawn. It then rests on the finished drawing; pointing at it draws
+   it again. Visitors who reduce motion, and anyone
    without JavaScript, see the finished drawings only. */
 
 document.querySelectorAll("[data-draw]").forEach(function (svg) {
@@ -421,8 +423,32 @@ document.querySelectorAll("[data-draw]").forEach(function (svg) {
     frame = requestAnimationFrame(tick);
   }
 
-  if (plate) plate.addEventListener("plate-shown", play);
-  if (page) page.addEventListener("page-shown", play);
-  // In view as the page opens (the first game, or one opened by its link): it draws now
-  if (document.body.classList.contains("has-shelf")) play();
+  // A drawing waits until it is on screen before it draws: choosing a game (or
+  // turning a page) gets it ready, and it draws once the visitor reaches it.
+  var ready = false;
+  var onScreen = false;
+  function getReady() {
+    ready = true;
+    if (onScreen) { ready = false; play(); }
+    // Until then it waits as a blank page, so it is never seen finished first
+    else if (!calm.matches) steps.forEach(function (step) { set(step, 0); });
+  }
+  if ("IntersectionObserver" in window) {
+    new IntersectionObserver(function (entries) {
+      onScreen = entries[entries.length - 1].isIntersecting;
+      if (onScreen && ready) { ready = false; play(); }
+    }, { threshold: 0.6 }).observe(svg);
+  } else {
+    onScreen = true;
+  }
+
+  if (plate) plate.addEventListener("plate-shown", getReady);
+  if (page) page.addEventListener("page-shown", getReady);
+  // The first game, or one opened by its link, is ready as the page opens
+  if (document.body.classList.contains("has-shelf")) getReady();
+
+  // Pointing at a finished drawing draws it again
+  svg.addEventListener("mouseenter", function () {
+    if (!frame) play();
+  });
 });
